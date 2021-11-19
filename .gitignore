@@ -131,3 +131,6 @@ dmypy.json
 # pipenv
 Pipfile
 Pipfile.lock
+
+# VS Code
+.vscode
