@@ -137,3 +137,6 @@ Pipfile.lock
 
 # Part1 Testing
 Part1/test.ipynb
+
+# Other
+.DS_Store
