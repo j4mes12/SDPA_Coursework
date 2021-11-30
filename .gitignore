@@ -134,3 +134,6 @@ Pipfile.lock
 
 # VS Code
 .vscode
+
+# Part1 Testing
+Part1/test.ipynb
