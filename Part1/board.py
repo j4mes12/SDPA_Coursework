@@ -1,15 +1,36 @@
+from player import Player
+
+
 class Board:
     def __init__(self, n):
-        self.p1 = [(0, 0)]
-        self.p2 = [(-1, -1)]
+        self.player1 = Player(init_body=[(0, 0)], init_direction="R")
+        self.player2 = Player(init_body=[(n, n)], init_direction="L")
         self.n = n
+
+    def play(self):
+        self.print_board()
+
+        while True:
+            p1_input = input("Player1 (LRUD): ").lower()
+
+            if p1_input in "lrud":
+                break
+
+            p2_input = input("Player2 (LRUD): ").lower()
+
+            if p2_input in "lrud":
+                break
 
     def make_board(self):
 
         board = [[0] * self.n for _ in range(self.n)]
 
-        board[self.p1[-1][0]][self.p1[-1][0]] = "1"
-        board[-1][-1] = "2"
+        board[self.player1.head[0]][self.player1.head[1]] = "1"
+        board[self.player2.head[0]][self.player2.head[1]] = "2"
+
+        for p1, p2 in zip(self.player1.body[1:], self.player2.body[1:]):
+            board[p1[0]][p1[1]] = "1"
+            board[p2[0]][p2[1]] = "2"
 
         return board
 
@@ -31,5 +52,5 @@ class Board:
 
         print("#" * (2 * self.n + 3))
 
-    def execute_move(self, player, move):
-        print("player has moved")
+    def next_position(self, position, step):
+        return ((position[0] + step[0]), (position[1] + step[1]))
