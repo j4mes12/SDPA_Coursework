@@ -1,26 +1,35 @@
-import numpy as np
-
-
 class Board:
-    def __init__(self, p1_position, p2_position, n):
-        self.p1_position = p1_position
-        self.p2_position = p2_position
+    def __init__(self, n):
+        self.p1 = [(0, 0)]
+        self.p2 = [(-1, -1)]
         self.n = n
 
-    def print_board(self, n):
-        self.board = np.zeros(shape=(n, n)).astype(int)
-        self.board[0, 0] = "1"
-        self.board[-1, -1] = "2"
+    def make_board(self):
 
-        for i in range(n):
+        board = [[0] * self.n for _ in range(self.n)]
+
+        board[self.p1[-1][0]][self.p1[-1][0]] = "1"
+        board[-1][-1] = "2"
+
+        return board
+
+    def print_board(self):
+
+        board = self.make_board()
+
+        print("#" * (2 * self.n + 3))
+
+        for i in range(self.n):
             print("#|", end="")
-            for j in range(n):
-                if self.board[i, j] == 0:
+            for j in range(self.n):
+                if board[i][j] == 0:
                     out = " "
                 else:
-                    out = self.board[i, j]
+                    out = board[i][j]
                 print(f"{out}|", end="")
             print("#")
+
+        print("#" * (2 * self.n + 3))
 
     def execute_move(self, player, move):
         print("player has moved")

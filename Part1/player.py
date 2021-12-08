@@ -1,12 +1,4 @@
 class Player:
-    def __init__(self):
-        print("hello")
-
-    def move_right(self):
-        print("move_right")
-
-    def move_left(self):
-        print("move_left")
-
-    def update_position(self, move):
-        print("new position")
+    def __init__(self, p1, p2):
+        self.p1 = [(0, 0)]
+        self.p2 = [(0, 0)]
