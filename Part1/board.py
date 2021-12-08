@@ -7,20 +7,6 @@ class Board:
         self.player2 = Player(init_body=[(n, n)], init_direction="L")
         self.n = n
 
-    def play(self):
-        self.print_board()
-
-        while True:
-            p1_input = input("Player1 (LRUD): ").lower()
-
-            if p1_input in "lrud":
-                break
-
-            p2_input = input("Player2 (LRUD): ").lower()
-
-            if p2_input in "lrud":
-                break
-
     def make_board(self):
 
         board = [[0] * self.n for _ in range(self.n)]
