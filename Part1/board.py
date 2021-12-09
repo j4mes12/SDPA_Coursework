@@ -1,15 +1,20 @@
-from player import Player
+from player import Player, Computer
 
 
 class Board:
 
     direction_dict = {"l": (0, -1), "r": (0, 1), "u": (-1, 0), "d": (1, 0)}
-    output_dict = {0: " ", 1: 1, 2: 2, "X": "X"}
 
-    def __init__(self, n):
+    def __init__(self, n, computer=False):
         self.player1 = Player(init_body=[(0, 0)], init_direction="r")
-        self.player2 = Player(init_body=[(n - 1, n - 1)], init_direction="l")
+
+        if computer:
+            self.player2 = Computer(init_body=[(n - 1, n - 1)], init_direction="l")
+        else:
+            self.player2 = Player(init_body=[(n - 1, n - 1)], init_direction="l")
         self.n = n
+
+        self.output_dict = {0: " ", 1: self.player1.id, 2: self.player2.id, "X": "X"}
 
     def make_board(self):
 
@@ -48,7 +53,7 @@ class Board:
         return ((position[0] + step[0]), (position[1] + step[1]))
 
     def check_legal_move(self, move):
-        return move in "lrud"
+        return (move in "lrud") & (len(move) == 1)
 
     def check_legal_position(self, position):
         no_cross = position not in (self.player2.body + self.player1.body)
