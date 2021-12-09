@@ -6,7 +6,7 @@ class Player:
     def head(self):
         return self.body[-1]
 
-    def step(self, step):
+    def take_step(self, step):
         self.body.append(step)
 
     def change_direction(self, direction):
