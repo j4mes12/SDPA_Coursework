@@ -52,5 +52,6 @@ class Board:
 
     def check_legal_position(self, position):
         no_cross = position not in (self.player2.body + self.player1.body)
-        in_board = (0 <= position[0] <= self.n - 1) & (0 <= position[1] <= self.n - 1)
-        return no_cross & in_board
+        in_board_x = 0 <= position[0] <= self.n - 1
+        in_board_y = 0 <= position[1] <= self.n - 1
+        return no_cross & in_board_x & in_board_y
