@@ -6,15 +6,23 @@ class Board:
     direction_dict = {"l": (0, -1), "r": (0, 1), "u": (-1, 0), "d": (1, 0)}
 
     def __init__(self, n, computer=False):
-        self.player1 = Player(init_body=[(0, 0)], init_direction="r")
+        self.n = n
+        self.player1 = Player(init_body=[(0, 0)], init_direction="r", id=1)
 
         if computer:
-            self.player2 = Computer(init_body=[(n - 1, n - 1)], init_direction="l")
+            self.player2 = Computer(
+                init_body=[(n - 1, n - 1)], init_direction="l", id="C"
+            )
         else:
-            self.player2 = Player(init_body=[(n - 1, n - 1)], init_direction="l")
-        self.n = n
+            self.player2 = Player(init_body=[(n - 1, n - 1)], init_direction="l", id=2)
 
-        self.output_dict = {0: " ", 1: self.player1.id, 2: self.player2.id, "X": "X"}
+        self.output_dict = {
+            0: " ",
+            1: self.player1.id,
+            2: self.player2.id,
+            "X": "X",
+            "O": "O",
+        }
 
     def make_board(self):
 
@@ -24,7 +32,7 @@ class Board:
             board[body1[0]][body1[1]] = "X"
 
         for body2 in self.player2.body:
-            board[body2[0]][body2[1]] = "X"
+            board[body2[0]][body2[1]] = "O"
 
         p1_head = self.player1.head()
         p2_head = self.player2.head()
