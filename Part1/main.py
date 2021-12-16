@@ -1,4 +1,5 @@
 from board import Board
+from itertools import product
 
 
 def main():
@@ -144,6 +145,9 @@ def main():
                 position=game.player2.head(), new_direction=game.player2.direction
             )
 
+            if p1_next_position == p2_next_position:
+                return print("Shake hands: It's a tie")
+
             if game.check_legal_position(position=p1_next_position):
                 game.player1.take_step(p1_next_position)
             else:
@@ -151,17 +155,41 @@ def main():
                 break
 
             if game.check_legal_position(position=p2_next_position):
-                game.player1.take_step(p2_next_position)
+                game.player2.take_step(p2_next_position)
             else:
                 game.player1.display_winner()
                 break
 
             game.print_board()
+            break
 
     def smart_computer_game():
+        def smart_move():
+            options = "lrud".replace(
+                game.opposite_direction[game.player2.direction], ""
+            )
+
+            search_dict = {i: 0 for i in options}
+
+            for i in options:
+                new_pos = game.calculate_next_position(game.player2.head(), i)
+                if (new_pos not in (game.player1.body + game.player2.body)) & (
+                    game.check_legal_position(new_pos)
+                ):
+                    for x, y in product(
+                        range(2, -2, -1),
+                        range(2, -2, -1),
+                    ):
+                        search = (new_pos[0] + x, new_pos[1] + y)
+                        if (game.check_legal_position(search)) & (
+                            search not in (game.player1.body + game.player2.body)
+                        ):
+                            search_dict[i] += 1
+            return max(search_dict, key=search_dict.get)
+
         while True:
             game.player1.get_input()
-            game.player2.generate_smart_move()
+            game.player2.in_value = smart_move()
 
             if game.player1.in_value == "q":
                 return print("Game Ended.")
@@ -182,6 +210,9 @@ def main():
                 position=game.player2.head(), new_direction=game.player2.direction
             )
 
+            if p1_next_position == p2_next_position:
+                return print("Shake hands: It's a tie")
+
             if game.check_legal_position(position=p1_next_position):
                 game.player1.take_step(p1_next_position)
             else:
@@ -189,7 +220,7 @@ def main():
                 break
 
             if game.check_legal_position(position=p2_next_position):
-                game.player1.take_step(p2_next_position)
+                game.player2.take_step(p2_next_position)
             else:
                 game.player1.display_winner()
                 break
