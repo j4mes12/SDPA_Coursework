@@ -56,12 +56,14 @@ class Board:
 
         print("#" * (2 * self.n + 3))
 
-    def next_position(self, position, new_direction):
+    def calculate_next_position(self, position, new_direction):
         step = self.direction_dict[new_direction]
         return ((position[0] + step[0]), (position[1] + step[1]))
 
     def check_legal_move(self, move):
-        return (move in "lrud") & (len(move) == 1)
+        lrud = move in "lrud"
+        single_character = len(move) == 1
+        return lrud & single_character
 
     def check_legal_position(self, position):
         no_cross = position not in (self.player2.body + self.player1.body)

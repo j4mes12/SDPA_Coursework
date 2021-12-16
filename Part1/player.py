@@ -1,4 +1,6 @@
 import random
+from getpass import getpass
+from itertools import product
 
 
 class Player:
@@ -13,8 +15,17 @@ class Player:
     def take_step(self, step):
         self.body.append(step)
 
-    def change_direction(self, direction):
-        self.direction = direction
+    def change_direction(self):
+        self.direction = self.in_value
+
+    def get_input(self):
+        self.in_value = getpass(prompt=f"Player {self.id} (LRUD): ").lower()
+
+    def display_winner(self):
+        if self.id == "C":
+            print("GAME OVER: Computer wins!")
+        else:
+            print(f"GAME OVER: Player {self.id} wins!")
 
 
 class Computer(Player):
@@ -26,4 +37,7 @@ class Computer(Player):
 
     def generate_move(self):
         rng = random.randint(0, 3)
-        return self.computer_dict[rng]
+        self.in_value = self.computer_dict[rng]
+
+    def generate_smart_move(self):
+        return self.generate_move()

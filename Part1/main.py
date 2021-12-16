@@ -4,11 +4,17 @@ from board import Board
 def main():
     while True:
         menu = input(
-            "Welcome to the game. Please select which version you want to play:\n\t(1) Basic Game\n\t(2) Complex Game\n\t(3) Versus Computer\nChoice: "
+            """Welcome to the game. Please select which version you want to play:
+            \t(1) Basic Game
+            \t(2) Complex Game
+            \t(3) Versus Random Computer
+            \t(4) Versus Smart Computer
+            \t(5) Basic Game on Hex Board
+            Choice: """
         )
         if menu == "q":
             return print("Game Ended.")
-        elif menu in ["1", "2", "3"]:
+        elif menu in "12345":
             break
         else:
             print(f"Invalid Menu Choice. Input: {menu}")
@@ -25,77 +31,75 @@ def main():
 
     def basic_game():
         while True:
-            p1_input = input(f"Player {game.player1.id} (LRUD): ").lower()
+            game.player1.get_input()
 
-            if p1_input == "q":
+            if game.player1.in_value == "q":
                 return print("Game Ended.")
-            elif game.check_legal_move(p1_input):
-                game.player1.change_direction(p1_input)
+            elif game.check_legal_move(game.player1.in_value):
+                game.player1.change_direction()
             else:
-                winner = game.player2.id
+                game.player2.display_winner()
                 break
 
-            p1_next_position = game.next_position(
+            p1_next_position = game.calculate_next_position(
                 position=game.player1.head(), new_direction=game.player1.direction
             )
 
             if game.check_legal_position(position=p1_next_position):
                 game.player1.take_step(p1_next_position)
             else:
-                winner = game.player2.id
+                game.player2.display_winner()
                 break
 
             game.print_board()
 
-            p2_input = input(f"Player {game.player2.id} (LRUD): ").lower()
+            game.player2.get_input()
 
-            if p2_input == "q":
+            if game.player2.in_value == "q":
                 return print("Game Ended.")
-            elif game.check_legal_move(p2_input):
-                game.player2.change_direction(p2_input)
+            elif game.check_legal_move(game.player2.in_value):
+                game.player2.change_direction()
             else:
-                winner = game.player1.id
+                game.player1.display_winner()
                 break
 
-            p2_next_position = game.next_position(
+            p2_next_position = game.calculate_next_position(
                 position=game.player2.head(), new_direction=game.player2.direction
             )
 
             if game.check_legal_position(p2_next_position):
                 game.player2.take_step(p2_next_position)
             else:
-                winner = game.player1.id
+                game.player1.display_winner()
                 break
 
             game.print_board()
 
-        print(f"GAME OVER: Player {winner} wins!")
-
     def complex_game():
         while True:
-            p1_input = input(f"Player {game.player1.id} (LRUD): ").lower()
-            p2_input = input(f"Player {game.player2.id} (LRUD): ").lower()
+            game.player1.get_input()
+            game.player2.get_input()
 
-            if p1_input == "q" or p2_input == "q":
+            if game.player1.in_value == "q" or game.player2.in_value == "q":
                 return print("Game Ended.")
 
-            if game.check_legal_move(p1_input):
-                game.player1.change_direction(p1_input)
+            if game.check_legal_move(game.player1.in_value):
+                game.player1.change_direction()
             else:
-                winner = game.player2.id
+                game.player2.display_winner()
                 break
 
-            if game.check_legal_move(p2_input):
-                game.player2.change_direction(p2_input)
+            if game.check_legal_move(game.player2.in_value):
+                game.player2.change_direction()
             else:
-                winner = game.player1.id
+                game.player1.display_winner()
                 break
 
-            p1_next_position = game.next_position(
+            p1_next_position = game.calculate_next_position(
                 position=game.player1.head(), new_direction=game.player1.direction
             )
 
-            p2_next_position = game.next_position(
+            p2_next_position = game.calculate_next_position(
                 position=game.player2.head(), new_direction=game.player2.direction
             )
 
@@ -105,63 +109,97 @@ def main():
             if game.check_legal_position(position=p1_next_position):
                 game.player1.take_step(p1_next_position)
             else:
-                winner = game.player2.id
+                game.player2.display_winner()
                 break
 
             if game.check_legal_position(p2_next_position):
                 game.player2.take_step(p2_next_position)
             else:
-                winner = game.player1.id
+                game.player1.display_winner()
                 break
 
             game.print_board()
 
-        print(f"GAME OVER: Player {winner} wins!")
-
     def computer_game():
         while True:
-            p1_input = input(f"Player {game.player1.id} (LRUD): ").lower()
-            p2_input = game.player2.generate_move()
+            game.player1.get_input()
+            game.player2.generate_move()
 
-            if p1_input == "q":
+            if game.player1.in_value == "q":
                 return print("Game Ended.")
 
-            if game.check_legal_move(p1_input):
-                game.player1.change_direction(p1_input)
+            if game.check_legal_move(game.player1.in_value):
+                game.player1.change_direction()
             else:
-                winner = "COMPUTER"
+                game.player2.display_winner()
                 break
 
-            game.player2.change_direction(p2_input)
+            game.player2.change_direction()
 
-            p1_next_position = game.next_position(
+            p1_next_position = game.calculate_next_position(
                 position=game.player1.head(), new_direction=game.player1.direction
             )
 
-            p2_next_position = game.next_position(
+            p2_next_position = game.calculate_next_position(
                 position=game.player2.head(), new_direction=game.player2.direction
             )
 
             if game.check_legal_position(position=p1_next_position):
                 game.player1.take_step(p1_next_position)
             else:
-                winner = "COMPUTER"
+                game.player2.display_winner()
                 break
 
             if game.check_legal_position(position=p2_next_position):
                 game.player1.take_step(p2_next_position)
             else:
-                winner = game.player1.id
+                game.player1.display_winner()
                 break
 
             game.print_board()
 
-        if not winner == "COMPUTER":
-            winner += "Player "
+    def smart_computer_game():
+        while True:
+            game.player1.get_input()
+            game.player2.generate_smart_move()
 
-        print(f"GAME OVER: {winner} wins!")
+            if game.player1.in_value == "q":
+                return print("Game Ended.")
 
-    if menu == "3":
+            if game.check_legal_move(game.player1.in_value):
+                game.player1.change_direction()
+            else:
+                game.player2.display_winner()
+                break
+
+            game.player2.change_direction()
+
+            p1_next_position = game.calculate_next_position(
+                position=game.player1.head(), new_direction=game.player1.direction
+            )
+
+            p2_next_position = game.calculate_next_position(
+                position=game.player2.head(), new_direction=game.player2.direction
+            )
+
+            if game.check_legal_position(position=p1_next_position):
+                game.player1.take_step(p1_next_position)
+            else:
+                game.player2.display_winner()
+                break
+
+            if game.check_legal_position(position=p2_next_position):
+                game.player1.take_step(p2_next_position)
+            else:
+                game.player1.display_winner()
+                break
+
+            game.print_board()
+
+    def basic_hex_game():
+        print("not ready yet")
+
+    if menu in "34":
         game = Board(board_size, computer=True)
     else:
         game = Board(board_size)
@@ -174,6 +212,10 @@ def main():
         complex_game()
     elif menu == "3":
         computer_game()
+    elif menu == "4":
+        smart_computer_game()
+    elif menu == "5":
+        basic_hex_game()
 
 
 if __name__ == "__main__":
