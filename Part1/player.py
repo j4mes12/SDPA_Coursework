@@ -1,3 +1,4 @@
+# Import required packages
 import random
 from getpass import getpass
 
@@ -34,11 +35,11 @@ class Player:
 
         return self.body[-1]
 
-    def take_step(self, step):
+    def take_step(self):
         """Method to add a new position to body of the snake for the player instance."""
 
-        # Appends the player's new position to the end of the body
-        self.body.append(step)
+        # Appends the player's next position to the end of the body
+        self.body.append(self.next_position)
 
     def change_direction(self):
         """Method to assign a new direction to a player instance based on the get_input method"""

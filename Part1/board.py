@@ -1,3 +1,4 @@
+# Import classes from player
 from player import Player, Computer
 
 
@@ -28,6 +29,7 @@ class Board:
         # Create player instances
         self.player1 = Player(init_body=[(0, 0)], init_direction="r", id=1)
 
+        # If game version is versus a computer, player2 is a Copmuter instance
         if computer:
             self.player2 = Computer(
                 init_body=[(n - 1, n - 1)], init_direction="l", id="C"
@@ -161,3 +163,79 @@ class Board:
         in_board_y = 0 <= position[1] <= self.n - 1
 
         return no_cross & in_board_x & in_board_y
+
+    def calculate_next_positions_sim(self):
+        """This method calculates the next position based on instance directions and head.
+        The next position is assigned to the next_position instance variable."""
+
+        # Calculate next position for player 1
+        self.player1.next_position = self.calculate_next_position(
+            position=self.player1.head(), new_direction=self.player1.direction
+        )
+
+        # Calculate next position for player 2
+        self.player2.next_position = self.calculate_next_position(
+            position=self.player2.head(), new_direction=self.player2.direction
+        )
+
+    def check_legal_moves_sim(self):
+        """This method checks if the inputted move is one of lrud for both player instances.
+
+        ---Returns---
+        result: str
+        string identifier that details the outcome of the legailty test. P0 = pass,
+        T0 = tie, W1 = player 1 wins, W2 = player 2 wins"""
+
+        result = "P0"
+
+        # Checks if both moves are not legal - results in a tie
+        if (not self.check_legal_move(self.player1.in_value)) & (
+            not self.check_legal_move(self.player2.in_value)
+        ):
+            result = "T0"
+
+        # Checks if player 2 is illegal and player 1 is legal - results in W1
+        elif (self.check_legal_move(self.player1.in_value)) & (
+            not self.check_legal_move(self.player2.in_value)
+        ):
+            result = "W1"
+
+        # Checks if player 1 is illegal and player 2 is legal - results in W2
+        elif (not self.check_legal_move(self.player1.in_value)) & (
+            self.check_legal_move(self.player2.in_value)
+        ):
+            result = "W2"
+
+        return result
+
+    def check_legal_positions_sim(self):
+        """This method checks if position is within the board and not a player's past
+        move for both players simultaneously. Heavily uses the check_legal_position method.
+
+        ---Returns---
+        result: str
+        string identifier that details the outcome of the legailty test. P0 = pass,
+        T0 = tie, W1 = player 1 wins, W2 = player 2 wins"""
+
+        # Initialse result to default on a pass
+        result = "P0"
+
+        # Checks if both positions are not legal - results in a tie
+        if (not self.check_legal_position(self.player1.next_position)) & (
+            not self.check_legal_position(self.player2.next_position)
+        ) | (self.player1.next_position == self.player2.next_position):
+            result = "T0"
+
+        # Checks if player 2 is illegal and player 1 is legal - results in W1
+        elif (self.check_legal_position(self.player1.next_position)) & (
+            not self.check_legal_position(self.player2.next_position)
+        ):
+            result = "W1"
+
+        # Checks if player 1 is illegal and player 2 is legal - results in W2
+        elif (not self.check_legal_position(self.player1.next_position)) & (
+            self.check_legal_position(self.player2.next_position)
+        ):
+            result = "W2"
+
+        return result
