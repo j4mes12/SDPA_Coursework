@@ -10,7 +10,6 @@ def main():
             \t(2) Complex Game
             \t(3) Versus Random Computer
             \t(4) Versus Smart Computer
-            \t(5) Basic Game on Hex Board
             Choice: """
         )
         if menu == "q":
@@ -124,7 +123,7 @@ def main():
     def computer_game():
         while True:
             game.player1.get_input()
-            game.player2.generate_move()
+            game.player2.generate_random_move()
 
             if game.player1.in_value == "q":
                 return print("Game Ended.")
@@ -164,7 +163,7 @@ def main():
             break
 
     def smart_computer_game():
-        def smart_move():
+        def generate_smart_move():
             options = "lrud".replace(
                 game.opposite_direction[game.player2.direction], ""
             )
@@ -189,7 +188,7 @@ def main():
 
         while True:
             game.player1.get_input()
-            game.player2.in_value = smart_move()
+            game.player2.in_value = generate_smart_move()
 
             if game.player1.in_value == "q":
                 return print("Game Ended.")
@@ -227,9 +226,6 @@ def main():
 
             game.print_board()
 
-    def basic_hex_game():
-        print("not ready yet")
-
     if menu in "34":
         game = Board(board_size, computer=True)
     else:
@@ -245,8 +241,6 @@ def main():
         computer_game()
     elif menu == "4":
         smart_computer_game()
-    elif menu == "5":
-        basic_hex_game()
 
 
 if __name__ == "__main__":

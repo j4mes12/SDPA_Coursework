@@ -1,6 +1,5 @@
 import random
 from getpass import getpass
-from itertools import product
 
 
 class Player:
@@ -81,7 +80,7 @@ class Computer(Player):
 
         Player.__init__(self, init_body=init_body, init_direction=init_direction, id=id)
 
-    def generate_move(self):
+    def generate_random_move(self):
         """This method generates a random move for the random computer players. This uses the
         randint function to generate a random number and use the computer_dict to translate that
         into a direction to move in."""
