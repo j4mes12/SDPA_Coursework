@@ -2,16 +2,18 @@
 
 ## Project Design
 
-## Classes:
 
 ## Board Class
+
 ### Methods:
 
 ## Player Class
+
 ### Methods:
 
 
 ## Computer Class
+
 ### Methods:
 
 
