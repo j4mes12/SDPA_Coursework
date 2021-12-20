@@ -1,5 +1,5 @@
 
-# "Part 1: Software Development (Snake Game)"
+# Part 1: Software Development (Snake Game)
 
 ## Project Design
 
@@ -142,5 +142,3 @@ This method displays the winning message when the game is over. Since, in this c
 #### generate_random_move
 
 This method generates a random move for the random computer players. This uses the sample function from the random package to select one move from 'l', 'r', 'u' or 'd' as its random choice.
-
-# other important details
