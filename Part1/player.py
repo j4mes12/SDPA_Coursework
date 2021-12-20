@@ -55,17 +55,11 @@ class Player:
     def display_winner(self):
         """This method displays the winning message when the game is over."""
 
-        if self.id == "C":
-            print("GAME OVER: Computer wins!")
-        else:
-            print(f"GAME OVER: Player {self.id} wins!")
+        print(f"GAME OVER: Player {self.id} wins!")
 
 
 class Computer(Player):
     """This class inherts from the Player class and contains methods that the computer uses to play the game."""
-
-    # Dictionary to translate between random number and direction
-    computer_dict = {0: "l", 1: "r", 2: "u", 3: "d"}
 
     def __init__(self, init_body, init_direction, id):
         """This method uses the inherited __init__ method from the Player class to initialise.
@@ -81,13 +75,16 @@ class Computer(Player):
 
         Player.__init__(self, init_body=init_body, init_direction=init_direction, id=id)
 
-    def generate_random_move(self):
-        """This method generates a random move for the random computer players. This uses the
-        randint function to generate a random number and use the computer_dict to translate that
-        into a direction to move in."""
+    def display_winner(self):
+        """This method displays the winning message when the game is over. Since,
+        in this case, the computer has won, we want to output a different string."""
 
-        # Generate random number
-        rng = random.randint(0, 3)
+        print("GAME OVER: Computer wins!")
+
+    def generate_random_move(self):
+        """This method generates a random move for the random computer players. This uses the sample
+        function from the random package to select one move from 'l', 'r', 'u' or 'd' as its random
+        choice."""
 
         # Translate random number into direction and assign to in_value
-        self.in_value = self.computer_dict[rng]
+        self.in_value = random.sample("lrud", 1)[0]

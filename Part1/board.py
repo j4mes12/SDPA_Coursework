@@ -124,7 +124,7 @@ class Board:
         return next_position
 
     def check_legal_move(self, move):
-        """This method checks if the inputted move is one of lrud.
+        """This method checks if the inputted move is one of L, R, U or D.
 
         ---Paramters---
         move: str
