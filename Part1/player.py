@@ -27,7 +27,7 @@ class Player:
         colour: str
         string that gives the display colour that the user has set"""
 
-        # Initialse input paramters
+        # Initialse input parameters
         self.id = id
         self.body = init_body
         self.direction = None

@@ -208,7 +208,7 @@ class Board:
         so we can check there are no repeated choices. If both users want
         the default colour (white) then that is acceptable.
 
-        ---Paramters---
+        ---Parameters---
         player: str
         Player identifier. One of p1, p2 and c for player 1, player 2 and
         computer respectively.
@@ -336,7 +336,7 @@ class Board:
     def calculate_next_position(self, position, new_direction):
         """This method calculates the next position based on the entered direction and current position.
 
-        ---Paramters---
+        ---Parameters---
         position: set
         set of length two that describes the current location
 
@@ -358,7 +358,7 @@ class Board:
     def check_legal_move(self, move):
         """This method checks if the inputted move is one of L, R, U or D.
 
-        ---Paramters---
+        ---Parameters---
         move: str
         player move
 
