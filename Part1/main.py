@@ -273,14 +273,11 @@ def smart_computer_game(game):
         max_key: str
         string that is one of 'l', 'r', 'u' or 'd'"""
 
-        # Removes the current location from the list of direction options
-        options = "lrud".replace(game.opposite_direction[game.player2.direction], "")
-
         # Initialises a dictionary to store the search values
-        search_dict = {i: 0 for i in options}
+        search_dict = {i: 0 for i in "lrud"}
 
         # This loop runs through each direction and calculates the available spaces
-        for i in options:
+        for i in "lrud":
             possible_position = game.calculate_next_position(game.player2.head(), i)
 
             # Check that possible position is legal and not currently taken

@@ -49,9 +49,12 @@ before they play the game.
 Also, a key design decision was regarding the computer's generated moves. There were many ways generate
 random moves to start with, I initially used a dictionary and random integer generator to generate a random
 number between 0 and 3 and translate that number into a move. The approach I settled on however it a lot cleaner
-and is more readable.
+and is more readable. Regarding the computer's smart moves, the search approah I have taken creates an
+effective smart computer - it will give the user a run for their money! Although, it would be preferable
+for the `generate_smart_move` function to be a method as mentioned before, I felt the sophistication of
+the smart move function was a good balance.
 
-As previously mentionned, an extension I added to the project was adding personal configurations to be made
+As previously mentioned, an extension I added to the project was adding personal configurations to be made
 such as player id, start position and player colour for both players. I added new methods to achieve this and
 felt that splitting these questions up was important for clarity as I considered lumping them together in one
 line, but that appraoch was not as user friendly.
