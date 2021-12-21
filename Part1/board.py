@@ -198,7 +198,7 @@ class Board:
         if body_input == "":
             out = self.default_params["init_body"][player]
         else:
-            [(body_x, body_y)]
+            out = [(body_x, body_y)]
 
         return out
 

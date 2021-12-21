@@ -1,4 +1,5 @@
 # Import Packages
+import random
 from board import Board
 from itertools import product
 
@@ -15,21 +16,31 @@ def main():
             \t(2) Simultaneous Game
             \t(3) Versus Random Computer
             \t(4) Versus Smart Computer
+            \t(Blank) Random! Just hit Enter...
             \t(q) Quit
             Choice: """
         )
+        print(menu)
         if menu == "q":  # Provides an option to quit the game
             return print("Game Ended.")
-        elif menu in "12345":  # Checks for suitable options
+        if menu == "":  # Provides user a random option
+            menu = random.sample("1234", 1)[0]
+            print(f"Option {menu} Randomly Selected!")
+            break
+        elif menu in "1234":  # Checks for suitable options
             break
         else:
             print(f"Invalid Menu Choice. Input: {menu}")
 
     # This while loop asks the user to enter a suitable board size
     while True:
-        board_size = input("Please enter board size: ")
+        board_size = input("Please enter board size (Blank for Random!): ")
         if board_size == "q":  # Provides an option to quit the game
             return print("Game Ended.")
+        elif board_size == "":
+            board_size = random.randint(2, 9)
+            print(f"Random Board Size: {board_size}")
+            break
         elif board_size.strip().isdigit():  # Makes sure input in digit
             board_size = int(board_size)
             break

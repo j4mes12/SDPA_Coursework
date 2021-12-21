@@ -9,8 +9,9 @@ class Player:
     the player is facing"""
 
     def __init__(self, init_body, id, colour):
-        """This init method initialises the body and direction of each instance alongside
-        the id that has been specified.
+        """This init method initialises the body, id and colour that has been specified in
+        the player instance. A dummy direction of None is assigned as a filler since there
+        is no knowledge on where to move yet.
 
         ---Parameters---
         init_body: list
@@ -29,7 +30,7 @@ class Player:
         # Initialse input paramters
         self.id = id
         self.body = init_body
-        self.direction = "r"
+        self.direction = None
         self.colour = colour
 
     def head(self):
