@@ -8,23 +8,29 @@ class Player:
     on the past locations and current location of the players, player ids and the direction
     the player is facing"""
 
-    def __init__(self, init_body, init_direction, id):
+    def __init__(self, init_body, id, colour):
         """This init method initialises the body and direction of each instance alongside
         the id that has been specified.
 
         ---Parameters---
         init_body: list
         list of 2 dimentional sets describing where the inital player body starts.
+
         init_direction: str
         string describing initial direction player starts.
+
         id: str, int
         integer or string denoting player id. This is preset to 1 and 2 for players
-        1 and 2 respecively with the computer gettings assigned 'C'"""
+        1 and 2 respecively with the computer gettings assigned 'C'
+
+        colour: str
+        string that gives the display colour that the user has set"""
 
         # Initialse input paramters
-        self.body = init_body
-        self.direction = init_direction
         self.id = id
+        self.body = init_body
+        self.direction = "r"
+        self.colour = colour
 
     def head(self):
         """Method that returns the current location of the player - the head of the snake so to speak
@@ -61,19 +67,21 @@ class Player:
 class Computer(Player):
     """This class inherts from the Player class and contains methods that the computer uses to play the game."""
 
-    def __init__(self, init_body, init_direction, id):
+    def __init__(self, init_body, id, colour):
         """This method uses the inherited __init__ method from the Player class to initialise.
 
         ---Parameters---
         init_body: list
         list of 2 dimentional sets describing where the inital player body starts.
+
         init_direction: str
         string describing initial direction player starts.
+
         id: str, int
         integer or string denoting player id. This is preset to 1 and 2 for players
         1 and 2 respecively with the computer gettings assigned 'C'"""
 
-        Player.__init__(self, init_body=init_body, init_direction=init_direction, id=id)
+        Player.__init__(self, init_body=init_body, id=id, colour=colour)
 
     def display_winner(self):
         """This method displays the winning message when the game is over. Since,

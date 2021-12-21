@@ -85,13 +85,13 @@ def basic_game(game):
             return game.player2.display_winner()
 
         # Calculate player 1's next position
-        p1_next_position = game.calculate_next_position(
+        game.player1.next_position = game.calculate_next_position(
             position=game.player1.head(), new_direction=game.player1.direction
         )
 
         # Check if new position is legal
-        if game.check_legal_position(position=p1_next_position):
-            game.player1.take_step(p1_next_position)
+        if game.check_legal_position(game.player1.next_position):
+            game.player1.take_step()
         else:
             return game.player2.display_winner()
 
@@ -110,13 +110,13 @@ def basic_game(game):
             return game.player1.display_winner()
 
         # Calculate player 2's next position
-        p2_next_position = game.calculate_next_position(
+        game.player2.next_position = game.calculate_next_position(
             position=game.player2.head(), new_direction=game.player2.direction
         )
 
         # Check if new position is legal
-        if game.check_legal_position(p2_next_position):
-            game.player2.take_step(p2_next_position)
+        if game.check_legal_position(game.player2.next_position):
+            game.player2.take_step()
         else:
             return game.player1.display_winner()
 
