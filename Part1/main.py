@@ -20,7 +20,6 @@ def main():
             \t(q) Quit
             Choice: """
         )
-        print(menu)
         if menu == "q":  # Provides an option to quit the game
             return print("Game Ended.")
         if menu == "":  # Provides user a random option
