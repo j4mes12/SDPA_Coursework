@@ -57,7 +57,9 @@ class Player:
         """Method to get the input (hidden) from a user for their move. This move is
         stored in the class variable in_value which is then used in the change_direction method"""
 
-        self.in_value = getpass(prompt=f"Player {self.id} (LRUD): ").lower()
+        self.in_value = getpass(
+            prompt=f"Player {self.id} ( Enter one of LRUD): "
+        ).lower()
 
     def display_winner(self):
         """This method displays the winning message when the game is over."""
