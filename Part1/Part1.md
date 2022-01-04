@@ -121,6 +121,10 @@ This method populates the board with the current body and head for each player.
 
 This method displays the board aesthetically with pre-defined output symbols.
 
+#### get_used_spaces
+
+This method returns all the used spaces that have already been taken up on the board.
+
 #### calculate_next_position
 
 This method calculates the next position based on the entered direction and current position.

@@ -333,6 +333,18 @@ class Board:
         # Print final border
         print("#" * (2 * self.n + 3))
 
+    def get_used_spaces(self):
+        """This method returns all the used spaces that have already been taken up on the board.
+
+        ---Returns---
+        used_spcaes: list
+        list of tuples that contain the spaces that have been taken by pervious moves.
+        """
+
+        used_spaces = self.player1.body + self.player2.body
+
+        return used_spaces
+
     def calculate_next_position(self, position, new_direction):
         """This method calculates the next position based on the entered direction and current position.
 
