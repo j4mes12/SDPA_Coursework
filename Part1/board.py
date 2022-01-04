@@ -398,7 +398,7 @@ class Board:
         boolean that verifies position has not been previously used and is within the board in both x and y directions"""
 
         # Checks if position has not been previously used by a player
-        no_cross = position not in (self.player2.body + self.player1.body)
+        no_cross = position not in self.get_used_spaces()
 
         # Checks if position is in the board in x direction
         in_board_x = 0 <= position[0] <= self.n - 1
