@@ -334,7 +334,7 @@ class Board:
         print("#" * (2 * self.n + 3))
 
     def get_used_spaces(self):
-        """This method returns all the used spaces that have already been taken up on the board.
+        """This method returns all the spaces that have already been taken up on the board.
 
         ---Returns---
         used_spcaes: list

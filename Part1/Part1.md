@@ -123,7 +123,7 @@ This method displays the board aesthetically with pre-defined output symbols.
 
 #### get_used_spaces
 
-This method returns all the used spaces that have already been taken up on the board.
+This method returns all the spaces that have already been taken up on the board.
 
 #### calculate_next_position
 
