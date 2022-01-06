@@ -280,9 +280,7 @@ def smart_computer_game(game):
             possible_position = game.calculate_next_position(game.player2.head(), i)
 
             # Check that possible position is legal and not currently taken
-            if (possible_position not in game.get_used_spaces()) & (
-                game.check_legal_position(possible_position)
-            ):
+            if game.check_legal_position(possible_position):
                 # This loop creates a grid of the surrounding area and counts available spaces
                 for x, y in product(
                     range(2, -2, -1),
@@ -292,9 +290,7 @@ def smart_computer_game(game):
                     search = (possible_position[0] + x, possible_position[1] + y)
 
                     # Makes sure search position is legal
-                    if (game.check_legal_position(search)) & (
-                        search not in game.get_used_spaces()
-                    ):
+                    if game.check_legal_position(search):
                         search_dict[i] += 1  # Increase count if space is available
 
         # Calculate the direction that has the greatest available spaces
