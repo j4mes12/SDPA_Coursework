@@ -9,6 +9,7 @@ Player class.
 
 # Import required packages
 import random
+from itertools import product
 
 
 class Player:
@@ -107,3 +108,41 @@ class Computer(Player):
 
         # Translate random number into direction and assign to in_value
         self.in_value = random.sample("lrud", 1)[0]
+
+    def generate_smart_move(self, game):
+        """This function generates the smart move for the computer using a search
+        algorithm. It goes through all the viable directions and calculates the
+        number of available spaces in the immediate 3x3 area in that direction. The
+        direction that has the most available spaces is chosen. Since we are
+        reviewing a 3x3 area, this in itself looks at future moves as well as effective/
+        feasible next moves.
+
+        ---Returns---
+        max_key: str
+        string that is one of 'l', 'r', 'u' or 'd'"""
+
+        # Initialises a dictionary to store the search values
+        search_dict = {i: 0 for i in "lrud"}
+
+        # This loop runs through each direction and calculates the available spaces
+        for i in "lrud":
+            possible_position = game.calculate_next_position(game.player2.head(), i)
+
+            # Check that possible position is legal and not currently taken
+            if game.check_legal_position(possible_position):
+                # This loop creates a grid of the surrounding area and counts available spaces
+                for x, y in product(
+                    range(2, -2, -1),
+                    range(2, -2, -1),
+                ):
+                    # Calculate new position to search
+                    search = (possible_position[0] + x, possible_position[1] + y)
+
+                    # Makes sure search position is legal
+                    if game.check_legal_position(search):
+                        search_dict[i] += 1  # Increase count if space is available
+
+        # Calculate the direction that has the greatest available spaces
+        max_key = max(search_dict, key=search_dict.get)
+
+        return max_key

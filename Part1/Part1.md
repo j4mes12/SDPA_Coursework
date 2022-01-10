@@ -19,12 +19,7 @@ player/computer. Player instances are created *inside* the Board class's '_\_ini
 so are only accessed through the Board instances.
 
 Each game type is split up into its own function for ease of code review. The game, housed in a
-while loop to play, uses methods as much as possible and successfully does this. There are a
-few exceptions where this was not possible such as generating the smart computer move. This
-was the case because the information from multiple instances of the Player/Computer classes, as
-well as the current instance of the Board classes, was required thus we would have only been
-able to turn it into a method within the Board class. However, this approach didn't seem like
-it would be intuitive to have a Computer-based method housed in the Board class.
+while loop to play, uses methods as much as possible and successfully does this.
 
 As an extension, I have decided to add default values and random selections. It gives the user the
 option to hit Enter with no input and get a random choice in the case of game type and board size.
@@ -54,9 +49,7 @@ Also, a key  design decision was regarding the computer's generated moves. There
 random moves to start with, I initially used a dictionary and random integer generator to generate a random
 number between 0 and 3 and translate that number into a move. The approach I settled on however it a lot cleaner
 and is more readable. Regarding the computer's smart moves, the search approach I have taken creates an
-effective smart computer - it will give the user a run for their money! Although it would be preferable
-for the `generate_smart_move` function to be a method, I felt the sophistication of
-the smart move function was a good balance.
+effective smart computer - it will give the user a run for their money!
 
 As previously mentioned, an extension I added to the project was adding personal configurations to be made
 such as player id, start position and player colour for both players. I added new methods to achieve this and
@@ -200,3 +193,7 @@ This method displays the winning message when the game is over. Since, in this c
 #### generate_random_move
 
 This method generates a random move for the random computer players. This uses the sample function from the random package to select one move from 'l', 'r', 'u' or 'd' as its random choice.
+
+#### generate_smart_move
+
+This function generates the smart move for the computer using a search algorithm. It goes through all the viable directions and calculates the number of available spaces in the immediate 3x3 area in that direction. The direction that has the most available spaces is chosen. Since we are reviewing a 3x3 area, this in itself looks at future moves as well as effective/feasible next moves.
