@@ -1,3 +1,11 @@
+"""
+Name: James Stephenson
+Section: Part 1
+Description: This script starts the Tron Game, makes the game run and interact with the
+user. Different functions are used depending on the user's initial menu choice.
+
+"""
+
 # Import Packages
 import random
 from board import Board

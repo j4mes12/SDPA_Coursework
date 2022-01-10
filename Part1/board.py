@@ -1,3 +1,10 @@
+"""
+Name: James Stephenson
+Section: Part 1
+Description: This script houses the Board class which controls the Tron game for Part1.
+It creates and houses the player instances and contains methods to control the board.
+"""
+
 # Import classes from player
 from player import Player, Computer
 

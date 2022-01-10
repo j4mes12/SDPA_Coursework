@@ -1,3 +1,12 @@
+"""
+Name: James Stephenson
+Section: Part 1
+Description: This script contains the Player and Computer classes to house instance 
+information for each player in the Tron Game. Player information is also harvested
+within these classes using various methods. The computer class inherits from the
+Player class.
+"""
+
 # Import required packages
 import random
 from getpass import getpass
@@ -34,7 +43,8 @@ class Player:
         self.colour = colour
 
     def head(self):
-        """Method that returns the current location of the player - the head of the snake so to speak
+        """Method that returns the current location of the player - the head of the snake so
+        to speak.
 
         ---Returns---
         self.body[-1]: set
@@ -68,7 +78,8 @@ class Player:
 
 
 class Computer(Player):
-    """This class inherts from the Player class and contains methods that the computer uses to play the game."""
+    """This class inherts from the Player class and contains methods that the computer uses
+    to play the game."""
 
     def __init__(self, init_body, id, colour):
         """This method uses the inherited __init__ method from the Player class to initialise.
