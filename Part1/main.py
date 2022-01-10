@@ -16,7 +16,7 @@ def main():
     """This is the main function that is run and controls the program. It contains
     the menu procedure, board size request and executes the game."""
 
-    # This while loop requests user's menu choice and breaks once there is an acceptable entry
+    # This while loop requests the user's menu choice and breaks once there is an acceptable entry
     while True:
         menu = input(
             """Welcome to the game. Please select which version you want to play:
@@ -76,7 +76,7 @@ def main():
 
 def basic_game(game):
     """This function contains the method to run the basic game whereby players
-    input their move alternately and the baord is displayed after each move.
+    input their move alternately and the board is displayed after each move.
     Response to Step 2.
 
     ---Parameters---
@@ -144,7 +144,7 @@ def basic_game(game):
 
 def simultaneous_game(game):
     """This function contains the method to run the simultaneous game whereby players
-    input their move simultaneously and the baord is displayed after both moves have
+    input their move simultaneously and the board is displayed after both moves have
     been executed. Response to Step 3A.
 
     ---Parameters---

@@ -9,7 +9,6 @@ Player class.
 
 # Import required packages
 import random
-from getpass import getpass
 
 
 class Player:
@@ -24,14 +23,14 @@ class Player:
 
         ---Parameters---
         init_body: list
-        list of 2 dimentional sets describing where the inital player body starts.
+        list of 2 dimensional sets describing where the initial player body starts.
 
         init_direction: str
-        string describing initial direction player starts.
+        string describing the initial direction the player starts.
 
         id: str, int
         integer or string denoting player id. This is preset to 1 and 2 for players
-        1 and 2 respecively with the computer gettings assigned 'C'
+        1 and 2 respectively with the computer gettings assigned 'C'
 
         colour: str
         string that gives the display colour that the user has set"""
@@ -67,9 +66,7 @@ class Player:
         """Method to get the input (hidden) from a user for their move. This move is
         stored in the class variable in_value which is then used in the change_direction method"""
 
-        self.in_value = getpass(
-            prompt=f"Player {self.id} ( Enter one of LRUD): "
-        ).lower()
+        self.in_value = input(f"Player {self.id} ( Enter one of LRUD): ").lower()
 
     def display_winner(self):
         """This method displays the winning message when the game is over."""
@@ -78,7 +75,7 @@ class Player:
 
 
 class Computer(Player):
-    """This class inherts from the Player class and contains methods that the computer uses
+    """This class inherits from the Player class and contains methods that the computer uses
     to play the game."""
 
     def __init__(self, init_body, id, colour):
@@ -86,14 +83,14 @@ class Computer(Player):
 
         ---Parameters---
         init_body: list
-        list of 2 dimentional sets describing where the inital player body starts.
+        list of 2 dimensional sets describing where the initial player body starts.
 
         init_direction: str
-        string describing initial direction player starts.
+        string describing the initial direction the player starts.
 
         id: str, int
         integer or string denoting player id. This is preset to 1 and 2 for players
-        1 and 2 respecively with the computer gettings assigned 'C'"""
+        1 and 2 respectively with the computer gettings assigned 'C'"""
 
         Player.__init__(self, init_body=init_body, id=id, colour=colour)
 

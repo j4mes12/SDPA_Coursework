@@ -19,12 +19,12 @@ player/computer. Player instances are created *inside* the Board class's '_\_ini
 so are only accessed through the Board instances.
 
 Each game type is split up into its own function for ease of code review. The game, housed in a
-while loop to play, uses methods as much as possible and succesfully does this. There are a
-fwe exceptions were this was not possible such as generating the smart computer move. This
-was the case because information from multiple instances of the Player/Computer classes as
-well as the current instance of the Board classes were required thus we would have only been
+while loop to play, uses methods as much as possible and successfully does this. There are a
+few exceptions where this was not possible such as generating the smart computer move. This
+was the case because the information from multiple instances of the Player/Computer classes, as
+well as the current instance of the Board classes, was required thus we would have only been
 able to turn it into a method within the Board class. However, this approach didn't seem like
-it would be inituitive to have a Computer-based method housed in the Board class.
+it would be intuitive to have a Computer-based method housed in the Board class.
 
 As an extension, I have decided to add default values and random selections. It gives the user the
 option to hit Enter with no input and get a random choice in the case of game type and board size.
@@ -37,33 +37,37 @@ top left and bottom right corners, and both colours default to white.
 
 The game starts with a menu so the user can choose which type of game they wish to play. I
 considered splitting the menu up and starting by asking the user if they wanted to player the basic
-game or complex game to start with and then moving on to asking if they want to player a two player
-or one player version (in place of a computer game option) etc.
+game or complex game to start with and then moving on to asking if they want to play a two-player
+or one-player version (in place of a computer game option) etc.
 
 I felt that the menu approach was preferable since it required the user to input less information
-before playing the game. Instead the player has to choose between four options, set the board size,
+before playing the game. Instead, the player has to choose between four options, set the board size,
 configure personalisations and then play the game. This allowed me to add personalisation features
 (such as initial location, player id and player colour) without bombarding the user with questions
 before they play the game.
 
-Also, a key design decision was regarding the computer's generated moves. There were many ways generate
+When the option to play against a computer was added, we countinued with simultaneous submission of
+moves thus if a play and computer move into the same space, it will always end in a tie. This decision
+was actively taken based on the wording of the game specification.
+
+Also, a key  design decision was regarding the computer's generated moves. There were many ways to generate
 random moves to start with, I initially used a dictionary and random integer generator to generate a random
 number between 0 and 3 and translate that number into a move. The approach I settled on however it a lot cleaner
-and is more readable. Regarding the computer's smart moves, the search approah I have taken creates an
-effective smart computer - it will give the user a run for their money! Although, it would be preferable
-for the `generate_smart_move` function to be a method as mentioned before, I felt the sophistication of
+and is more readable. Regarding the computer's smart moves, the search approach I have taken creates an
+effective smart computer - it will give the user a run for their money! Although it would be preferable
+for the `generate_smart_move` function to be a method, I felt the sophistication of
 the smart move function was a good balance.
 
 As previously mentioned, an extension I added to the project was adding personal configurations to be made
 such as player id, start position and player colour for both players. I added new methods to achieve this and
 felt that splitting these questions up was important for clarity as I considered lumping them together in one
-line, but that appraoch was not as user friendly.
+line, but that approach was not as user friendly.
 
-I also considered allowing the user to input the starting direction, but came to the conclusion that no
-initial direction was required as it had to impact on the game.
+I also considered allowing the user to input the starting direction but concluded that no
+initial direction was required as it had no impact on the game.
 
-Further, it was hard to portray to the user how to imput their intended location in a meaningful way due to
-the coordinate nature of the board. I settled on added new functionality to display a blank board with
+Further, it was hard to portray to the user how to input their intended location in a meaningful way due to
+the coordinate-nature of the board. I settled on adding new functionality to display a blank board with
 labelled columns and rows which I felt really helped in the user's understanding of inputting their start
 location.
 
@@ -79,7 +83,7 @@ There are three files in this project: main.py, board.py and player.py
 
 ### Board Class
 
-This Class is responsible for controlling the game. It creates the instances for each player and contains methods regarding the board, calculating next positions and checking legality of moves/positions.
+This Class is responsible for controlling the game. It creates the instances for each player and contains methods regarding the board, calculating next positions and checking the legality of moves/positions.
 
 #### \_\_init\_\_ (Board)
 
@@ -87,7 +91,7 @@ This method initialises the class and creates the Player instances for the game.
 
 #### get_user_id
 
-This method gets the user's chosen ID and makes sure it is suitable: check it's length of one, an alphanumeric character or the default.
+This method gets the user's chosen ID and makes sure it is suitable: check it is of length one, an alphanumeric character or the default.
 
 #### get_user_colour
 
@@ -95,7 +99,7 @@ This method gets the user's desired output colour and makes sure it's one of the
 
 #### get_user_body
 
-This method gets the user's desired initial position. It also makes sure the input type is in the correct format and digits so we be effectively read in the user's input. We also start by displaying the available locations in a grid.
+This method gets the user's desired initial position. It also makes sure the input type is in the correct format and that they are digits. This is so we can effectively read in the user's input. We also start by displaying the available locations in a grid.
 
 #### get_second_user_information
 
@@ -123,7 +127,7 @@ This method displays the board aesthetically with pre-defined output symbols.
 
 #### get_used_spaces
 
-This method returns all the spaces that have already been taken up on the board.
+This method returns all the spaces that have already been taken on the board.
 
 #### calculate_next_position
 
@@ -135,7 +139,7 @@ This method checks if the inputted move is one of L, R, U or D.
 
 #### check_legal_position
 
-This method checks if position is within the board and not a player's past move.
+This method checks if the position is within the board and not a player's past move.
 
 #### calculate_next_positions_sim
 
@@ -147,7 +151,7 @@ This method checks if the inputted move is one of lrud for both player instances
 
 #### check_legal_positions_sims
 
-This method checks if position is within the board and not a player's past move for both players simultaneously. Heavily uses the check_legal_position method.
+This method checks if the positions are within the board and not a player's past move for both players simultaneously. Heavily uses the check_legal_position method.
 
 ### bcolours Class
 
@@ -167,7 +171,7 @@ This method returns the current location of the player - the head of the snake s
 
 #### take_step
 
-This method adds a new position to body of the snake for the player instance.
+This method adds a new position to body for the player instance.
 
 #### change_direction
 
@@ -175,7 +179,7 @@ This method assigns a new direction to a player instance based on the get_input 
 
 #### get_input
 
-This method gets the input (hidden) from a user for their move. This move is stored in the class variable in_value which is then used in the change_direction method.
+This method gets the input from a user for their move. This move is stored in the class variable in_value which is then used in the change_direction method.
 
 #### display_winner (Player)
 
@@ -183,11 +187,11 @@ This method displays the winning message when the game is over.
 
 ### Computer Class
 
-This class inherts from the Player class and contains methods that the computer uses to play the game.
+This class inherits from the Player class and contains methods that the computer uses to play the game.
 
 #### \_\_init\_\_ (Computer)
 
-The __init__ method for the Computer class calls the Player __init__ method to make use of the inhertiance.
+The __init__ method for the Computer class calls the Player __init__ method to make use of the inheritance.
 
 #### display_winner (Computer)
 

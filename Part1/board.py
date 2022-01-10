@@ -12,7 +12,7 @@ from player import Player, Computer
 class Board:
     """This Class is responsible for controlling the game. It creates the instances
     for each player and contains methods regarding the board, calculating next
-    positions and checking legality of moves/positions.
+    positions and checking the legality of moves/positions.
     """
 
     # Define dictionaries related to directions to translate between vectors and letters.
@@ -27,7 +27,7 @@ class Board:
         integer to define board size
 
         computer: bool
-        flag if user wants to play versus a computer
+        flag if the user wants to play versus a computer
         """
 
         # Make n a class variable
@@ -51,7 +51,7 @@ class Board:
             colour=self.get_user_colour(),
         )
 
-        # If game version is versus a computer, player2 is a Computer instance
+        # If the game version is versus a computer, player2 is a Computer instance
         if computer:
             print("---Computer---")
 
@@ -76,7 +76,7 @@ class Board:
 
     def get_user_id(self, player):
         """This method gets the user's chosen ID and makes sure it is suitable:
-        check it's length of one, an alphanumeric character or the default.
+        check it is of length one, an alphanumeric character or the default.
 
         ---Parameters---
         player: str
@@ -85,7 +85,7 @@ class Board:
 
         ---Returns---
         out: str
-        single character that is user's chosen ID
+        a single character that is the user's chosen ID
         """
 
         # Loop to ask the user for their input and check it's of the correct type
@@ -146,7 +146,7 @@ class Board:
 
     def get_user_body(self, player):
         """This method gets the user's desired initial position. It also makes sure the input type
-        is in the correct format and digits so we be effectively read in the user's input. We also
+        is in the correct format and that they are digits. This is so we can effectively read in the user's input. We also
         start by displaying the available locations in a grid.
 
         ---Parameters---
@@ -199,7 +199,7 @@ class Board:
                         )
             else:
                 print(
-                    "Invalid Start Location Format. Please enter a two digits in the form x,y."
+                    "Invalid Start Location Format. Please enter two digits in the form x,y."
                 )
 
         if body_input == "":
@@ -341,11 +341,11 @@ class Board:
         print("#" * (2 * self.n + 3))
 
     def get_used_spaces(self):
-        """This method returns all the spaces that have already been taken up on the board.
+        """This method returns all the spaces that have already been taken on the board.
 
         ---Returns---
         used_spcaes: list
-        list of tuples that contain the spaces that have been taken by pervious moves.
+        list of tuples that contain the spaces that have been taken by previous moves.
         """
 
         used_spaces = self.player1.body + self.player2.body
@@ -383,7 +383,7 @@ class Board:
 
         ---Returns---
         lrud & single_character: bool
-        boolean to describe if move is one of l, r, u or d' and just one character"""
+        boolean to describe if the move is one of l, r, u or d' and just one character"""
 
         # Checks if move is one of l, r, u or d
         lrud = move in "lrud"
@@ -394,7 +394,7 @@ class Board:
         return lrud & single_character
 
     def check_legal_position(self, position):
-        """This method checks if position is within the board and not a player's past move.
+        """This method checks if the position is within the board and not a player's past move.
 
         ---Parameters---
         position: set
@@ -460,7 +460,7 @@ class Board:
         return result
 
     def check_legal_positions_sim(self):
-        """This method checks if position is within the board and not a player's past
+        """This method checks if the positions are within the board and not a player's past
         move for both players simultaneously. Heavily uses the check_legal_position method.
 
         ---Returns---
