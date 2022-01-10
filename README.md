@@ -11,7 +11,7 @@ cd SDPA_Coursework
 
 ## Building the required environment
 
-We build the `SDPA-dev` environment using the `env.yml` file which contains the following code:
+We build the `SDPA-dev` environment which installs the required packages. To do this, we use the `env.yml` file containing the following code:
 
 ```python
 # Environment Name
@@ -42,7 +42,7 @@ dependencies:
 To create our environment using this `.yml` file, run the following code in the terminal:
 
 ```shell
-conda activate env -f env.yml --force
+conda env create -f env.yml --force
 conda activate SDPA-dev
 ```
 
