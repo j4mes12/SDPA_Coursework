@@ -13,10 +13,10 @@ user(s) which are in turn called upon and used to create instances in the main.p
 The two classes are the Board class (in board.py) and the Player and Computer classes (in player.py)
 with the Computer class inheriting from the Player class.
 
- A small note on the structure of the classes: the Board class is used to control anything related
- to the board and the Player/Computer classes are used to control everything related to the
- player/computer. Player instances are created *inside* the Board class's '_\_init__' method and
- so are only accessed through the Board instances.
+A small note on the structure of the classes: the Board class is used to control anything related
+to the board and the Player/Computer classes are used to control everything related to the
+player/computer. Player instances are created *inside* the Board class's '_\_init__' method and
+so are only accessed through the Board instances.
 
 Each game type is split up into its own function for ease of code review. The game, housed in a
 while loop to play, uses methods as much as possible and succesfully does this. There are a
