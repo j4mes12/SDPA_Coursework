@@ -41,7 +41,7 @@ def main():
 
     # This while loop asks the user to enter a suitable board size
     while True:
-        board_size = input("Please enter board size (Blank for Random!): ")
+        board_size = input("Please enter board size (3 or higher, Blank for Random!): ")
         if board_size == "q":  # Provides an option to quit the game
             return print("Game Ended.")
         elif board_size == "":
@@ -50,7 +50,12 @@ def main():
             break
         elif board_size.strip().isdigit():  # Makes sure input in digit
             board_size = int(board_size)
-            break
+            if board_size < 3:  # Checks the input is sufficiently big
+                print(
+                    f"Invalid Board Size. Value must be strictly greater than 3. Input: {board_size}"
+                )
+            else:
+                break
         else:
             print(f"Invalid Board Size. Input: {board_size}")
 

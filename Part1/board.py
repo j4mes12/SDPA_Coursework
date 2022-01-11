@@ -285,17 +285,23 @@ class Board:
         """This method displays a board so the user can decide where they want to start."""
 
         # Prints the column numbers with correct spacing
-        print("  ", end="")
-        for _ in range(self.n):
-            print(_, end=" ")
+        print("   ", end="")
+        for i in range(self.n):
+            print(i, end=" ")
         print(" ")
 
         # Prints an empty board starting with the row number
         for i in range(self.n):
-            print(f"{i}|", end="")
-            for j in range(self.n):
-                print(f" |", end="")
-            print("")
+            if i < 10:  # Change spacing if row number has more than one digit
+                print(f"{i} |", end="")
+            else:
+                print(f"{i}|", end="")
+
+            # Print the empty grid row - double spacing needed for columns of two digits
+            if self.n > 9:
+                print(" |" * 10 + "  |" * (self.n - 10))
+            else:
+                print(" |" * self.n)
 
     def populate_board(self, board):
         """This method populates the board with the current body and head for each player.
