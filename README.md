@@ -50,8 +50,6 @@ Note: you will have to be in the directory that houses `env.yml` for this code t
 
 ## Code Sections
 
----
-
 ### Part 1: Software Development (Snake Game)
 
 This part is contained in the Part1 folder. Part1.md gives a detailed overview of the script and the contained classes. The Tron Game is run using the main.py script using classes defined in board.py and player.py.
