@@ -78,9 +78,11 @@ No additional python packages are required other than those that are part of the
 
 ### Part 3: Data Analytics
 
-This part is all contained in the Part 3 folder, part3.ipynb notebook and api_data.csv
+This part is all contained in the Part 3 folder: `part3.ipynb` notebook, `api_data.csv` and `part3_functions.py`
 
-main.ipynb contains functionality to extract the api data and save it to api_data.csv
+`part3.ipynb` contains functionality to extract the api data and save it to api_data.csv
+
+We also have the `part3_functions.py` python script that contains the functions that we will be using to extract the api data.
 
 The following additional packages are required for this section. However, the `env.yml`
 file enacts the installation.
