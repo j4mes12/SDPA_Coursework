@@ -4,7 +4,7 @@
 ## Project Design
 
 This project is a game where one or two players interact with a board and control
-snakes with the L, R, U, D keys. The intention is to avoid colliding with both the snake
+snakes with the L, R, U, D keys. The intention is to avoid colliding with both snakes
 and the walls of the board.
 
 Technically, this game uses two classes together to create the game and interact with the user(s) which are in turn called upon and used to create instances in the main.py script.

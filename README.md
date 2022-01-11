@@ -13,7 +13,7 @@ cd SDPA_Coursework
 
 We build the `SDPA-dev` environment which installs the required packages. To do this, we use the `env.yml` file containing the following code:
 
-```python
+```yaml
 # Environment Name
 name: SPDA-dev
 
@@ -52,7 +52,7 @@ Note: you will have to be in the directory that houses `env.yml` for this code t
 
 ### Part 1: Software Development (Snake Game)
 
-This part is contained in the Part1 folder. Part1.md gives a detailed overview of the script and the contained classes. The Tron Game is run using the main.py script using classes defined in board.py and player.py.
+This part is contained in the Part1 folder. Part1.md gives a detailed overview of the script, how to play the game and the contained classes. The Tron Game is run using the main.py script using classes defined in board.py and player.py.
 
 No additional python packages are required other than those that are part of the base package set.
 
@@ -64,7 +64,7 @@ Part 1 is run using one of the following commands in your terminal once you have
 python Part1/main.py
 ```
 
-Note: if your computer's python default is python2, use the `python3` command instead of `python`.
+Note: if your computer's python default is python2, use the `python3` command instead of `python`. Python3 is required to run this script.
 
 ---
 
