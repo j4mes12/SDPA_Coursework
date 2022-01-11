@@ -190,6 +190,10 @@ The __init__ method for the Computer class calls the Player __init__ method to m
 
 This method displays the winning message when the game is over. Since, in this case, the computer has won, we want to output a different string.
 
+#### gen_exe_computer_move
+
+This method generates a computer move based on the type of computer that is being used and then executes the generated move using the change_direction method.
+
 #### generate_random_move
 
 This method generates a random move for the random computer players. This uses the sample function from the random package to select one move from 'l', 'r', 'u' or 'd' as its random choice.

@@ -16,7 +16,6 @@ class Board:
     """
 
     # Define dictionaries related to directions to translate between vectors and letters.
-    direction_dict = {"l": (0, -1), "r": (0, 1), "u": (-1, 0), "d": (1, 0)}
     opposite_direction = {"l": "r", "r": "l", "u": "d", "d": "u"}
 
     def __init__(self, n, computer=False):
@@ -68,10 +67,10 @@ class Board:
         # Define dicitonary to translate between output and board storing symbols.
         self.output_dict = {
             0: " ",
-            1: self.player1.colour + self.player1.id + bcolours.END,
-            2: self.player2.colour + self.player2.id + bcolours.END,
-            "X": self.player1.colour + "X" + bcolours.END,
-            "O": self.player2.colour + "0" + bcolours.END,
+            1: bcolours.colour_text(self.player1.id, self.player1.colour),
+            2: bcolours.colour_text(self.player2.id, self.player2.colour),
+            "X": bcolours.colour_text("X", self.player1.colour),
+            "O": bcolours.colour_text("O", self.player2.colour),
         }
 
     def get_user_id(self, player):
@@ -97,7 +96,6 @@ class Board:
 
             # Perform error checks
             if ((id_input.isalnum()) & len(id_input) == 1) | (id_input == ""):
-                print("ID Accepted.")
                 break
             else:
                 print("Invalid ID. Please enter a single character or digit.")
@@ -130,7 +128,6 @@ class Board:
 
             # Make sure input is one of the colour options
             if (colour_input in "123456") | (colour_input == ""):
-                print("Colour Accepted.")
                 break
             else:
                 print("Invalid Colour. Please enter a digit from the options.")
@@ -171,7 +168,6 @@ class Board:
 
             # Check for defaults
             if body_input == "":
-                print("Start Location Accepted.")
                 break
 
             body_split = body_input.split(",")
@@ -191,7 +187,6 @@ class Board:
 
                     # Check if coordinates are on board
                     if (0 <= body_x < self.n) & (0 <= body_y < self.n):
-                        print("Start Location Accepted.")
                         break
                     else:
                         print(
@@ -358,82 +353,15 @@ class Board:
 
         return used_spaces
 
-    def calculate_next_position(self, position, new_direction):
-        """This method calculates the next position based on the entered direction and current position.
-
-        ---Parameters---
-        position: set
-        set of length two that describes the current location
-
-        new_direction: str
-        string that describes in which direction a step is taking place
-
-        ---Returns---
-        next_position: set
-        set of length two that describes next location"""
-
-        # Use direction dictionary to turn new_direction into a vector
-        step = self.direction_dict[new_direction]
-
-        # Calculate the next position using vector addition
-        next_position = ((position[0] + step[0]), (position[1] + step[1]))
-
-        return next_position
-
-    def check_legal_move(self, move):
-        """This method checks if the inputted move is one of L, R, U or D.
-
-        ---Parameters---
-        move: str
-        player move
-
-        ---Returns---
-        lrud & single_character: bool
-        boolean to describe if the move is one of l, r, u or d' and just one character"""
-
-        # Checks if move is one of l, r, u or d
-        lrud = move in "lrud"
-
-        # Checks if move is one character
-        single_character = len(move) == 1
-
-        return lrud & single_character
-
-    def check_legal_position(self, position):
-        """This method checks if the position is within the board and not a player's past move.
-
-        ---Parameters---
-        position: set
-        set of length two that describes a position.
-
-        ---Returns---
-        no_cross & in_board_x & in_board_y: bool
-        boolean that verifies position has not been previously used and is within the board in both x and y directions"""
-
-        # Checks if position has not been previously used by a player
-        no_cross = position not in self.get_used_spaces()
-
-        # Checks if position is in the board in x direction
-        in_board_x = 0 <= position[0] <= self.n - 1
-
-        # Checks if position is in board in y direction
-        in_board_y = 0 <= position[1] <= self.n - 1
-
-        return no_cross & in_board_x & in_board_y
-
     def calculate_next_positions_sim(self):
         """This method calculates the next position based on instance directions and head.
         The next position is assigned to the next_position instance variable."""
 
         # Calculate next position for player 1
-        self.player1.next_position = self.calculate_next_position(
-            position=self.player1.head(), new_direction=self.player1.direction
-        )
+        self.player1.calculate_next_position()
 
         # Calculate next position for player 2
-        self.player2.next_position = self.calculate_next_position(
-            position=self.player2.head(), new_direction=self.player2.direction
-        )
+        self.player2.calculate_next_position()
 
     def check_legal_moves_sim(self):
         """This method checks if the inputted move is one of lrud for both player instances.
@@ -446,26 +374,22 @@ class Board:
         result = "P0"
 
         # Checks if both moves are not legal - results in a tie
-        if (not self.check_legal_move(self.player1.in_value)) & (
-            not self.check_legal_move(self.player2.in_value)
+        if (not self.player1.check_legal_move()) & (
+            not self.player2.check_legal_move()
         ):
             result = "T0"
 
         # Checks if player 2 is illegal and player 1 is legal - results in W1
-        elif (self.check_legal_move(self.player1.in_value)) & (
-            not self.check_legal_move(self.player2.in_value)
-        ):
+        elif (self.player1.check_legal_move()) & (not self.player2.check_legal_move()):
             result = "W1"
 
         # Checks if player 1 is illegal and player 2 is legal - results in W2
-        elif (not self.check_legal_move(self.player1.in_value)) & (
-            self.check_legal_move(self.player2.in_value)
-        ):
+        elif (not self.player1.check_legal_move()) & (self.player2.check_legal_move()):
             result = "W2"
 
         return result
 
-    def check_legal_positions_sim(self):
+    def check_legal_positions_sim(self, game):
         """This method checks if the positions are within the board and not a player's past
         move for both players simultaneously. Heavily uses the check_legal_position method.
 
@@ -478,20 +402,20 @@ class Board:
         result = "P0"
 
         # Checks if both positions are not legal - results in a tie
-        if (not self.check_legal_position(self.player1.next_position)) & (
-            not self.check_legal_position(self.player2.next_position)
+        if (not self.player1.check_legal_position(game)) & (
+            not self.player2.check_legal_position(game)
         ) | (self.player1.next_position == self.player2.next_position):
             result = "T0"
 
         # Checks if player 2 is illegal and player 1 is legal - results in W1
-        elif (self.check_legal_position(self.player1.next_position)) & (
-            not self.check_legal_position(self.player2.next_position)
+        elif (self.player1.check_legal_position(game)) & (
+            not self.player2.check_legal_position(game)
         ):
             result = "W1"
 
         # Checks if player 1 is illegal and player 2 is legal - results in W2
-        elif (not self.check_legal_position(self.player1.next_position)) & (
-            self.check_legal_position(self.player2.next_position)
+        elif (not self.player1.check_legal_position(game)) & (
+            self.player2.check_legal_position(game)
         ):
             result = "W2"
 
@@ -503,6 +427,7 @@ class bcolours:
     the colours aesthetically and a dictionary to store the available colours."""
 
     # End string
+    global END
     END = "\033[0m"
 
     # Colour Strings
@@ -513,14 +438,34 @@ class bcolours:
     BLUE = "\033[36m"
     MAGENTA = "\033[95m"
 
+    # Function to apply colours
+    def colour_text(string, colour):
+        """This function applies the specified colour to the specified
+        string and returns the coloured string.
+
+        ---Parameters---
+        string: str
+        string to be coloured
+
+        colour: str
+        colour to be applied
+
+        ---Returns---
+        coloured_string: str
+        string with colour prefixes and suffixes"""
+
+        # Colour string based on arguments
+        coloured_string = colour + string + END
+        return coloured_string
+
     # Display dictionary
     display_dictionary = {
         "1": "WHITE",
-        "2": GREEN + "GREEN" + END,
-        "3": YELLOW + "YELLOW" + END,
-        "4": BLUE + "BLUE" + END,
-        "5": MAGENTA + "MAGENTA" + END,
-        "6": RED + "RED" + END,
+        "2": colour_text("GREEN", GREEN),
+        "3": colour_text("YELLOW", YELLOW),
+        "4": colour_text("BLUE", BLUE),
+        "5": colour_text("MAGENTA", MAGENTA),
+        "6": colour_text("RED", RED),
     }
 
     # Colour dictionary

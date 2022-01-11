@@ -16,28 +16,57 @@ def main():
     """This is the main function that is run and controls the program. It contains
     the menu procedure, board size request and executes the game."""
 
-    # This while loop requests the user's menu choice and breaks once there is an acceptable entry
+    # This while loop requests the user's game-type choice and breaks once there is an acceptable entry
     while True:
-        menu = input(
+        game_type = input(
             """Welcome to the game. Please select which version you want to play:
             \t(1) Basic Game
             \t(2) Simultaneous Game
-            \t(3) Versus Random Computer
-            \t(4) Versus Smart Computer
             \t(Blank) Random! Just hit Enter...
             \t(q) Quit
             Choice: """
         )
-        if menu == "q":  # Provides an option to quit the game
+        if game_type == "q":  # Provides an option to quit the game
             return print("Game Ended.")
-        if menu == "":  # Provides user a random option
-            menu = random.sample("1234", 1)[0]
-            print(f"Option {menu} Randomly Selected!")
+        if game_type == "":  # Provides user a random option
+            game_type = random.sample("12", 1)[0]
+            print(f"Option {game_type} Randomly Selected!")
             break
-        elif menu in "1234":  # Checks for suitable options
+        elif game_type in "12":  # Checks for suitable options
             break
         else:
-            print(f"Invalid Menu Choice. Input: {menu}")
+            print(f"Invalid Menu Choice. Input: {game_type}")
+
+    # Translate user input into a string for code readability
+    gt_dict = {"1": "basic", "2": "sim"}
+    game_type = gt_dict[game_type]
+
+    # This while loop requests the user's opponent choice and breaks once there is an acceptable entry
+    global opponent_type
+    while True:
+        opponent_type = input(
+            """Please select who you want to play against:
+            \t(1) Human
+            \t(2) Random Computer
+            \t(3) Smart Computer
+            \t(Blank) Random! Just hit Enter...
+            \t(q) Quit
+            Choice: """
+        )
+        if opponent_type == "q":  # Provides an option to quit the game
+            return print("Game Ended.")
+        if opponent_type == "":  # Provides user a random option
+            opponent_type = random.sample("123", 1)[0]
+            print(f"Option {opponent_type} Randomly Selected!")
+            break
+        elif opponent_type in "123":  # Checks for suitable options
+            break
+        else:
+            print(f"Invalid Menu Choice. Input: {opponent_type}")
+
+    # Translate user input into a string for code readability
+    opponent_dict = {"1": "Human", "2": "RComp", "3": "SComp"}
+    opponent_type = opponent_dict[opponent_type]
 
     # This while loop asks the user to enter a suitable board size
     while True:
@@ -45,7 +74,7 @@ def main():
         if board_size == "q":  # Provides an option to quit the game
             return print("Game Ended.")
         elif board_size == "":
-            board_size = random.randint(2, 9)
+            board_size = random.randint(3, 9)
             print(f"Random Board Size: {board_size}")
             break
         elif board_size.strip().isdigit():  # Makes sure input in digit
@@ -60,7 +89,9 @@ def main():
             print(f"Invalid Board Size. Input: {board_size}")
 
     # Creates the game instance
-    if menu in "34":  # If versus computer options are chosen, player2 is a Computer
+    # If versus computer options are chosen, player2 is a Computer
+    global game
+    if opponent_type[1:] == "Comp":
         game = Board(board_size, computer=True)
     else:
         game = Board(board_size)
@@ -69,28 +100,17 @@ def main():
     game.print_board()
 
     # The specific type of game is executed based on the menu choice
-    if menu == "1":
-        basic_game(game)
-    elif menu == "2":
-        simultaneous_game(game)
-    elif menu == "3":
-        computer_game(game)
-    elif menu == "4":
-        smart_computer_game(game)
+    if game_type == "basic":
+        new_basic_game()
+    elif game_type == "sim":
+        new_simultaneous_game()
 
 
-def basic_game(game):
-    """This function contains the method to run the basic game whereby players
-    input their move alternately and the board is displayed after each move.
-    Response to Step 2.
-
-    ---Parameters---
-    game: Board instance
-    instance of the Board class.
-
-    ---Returns---
-    print statement
-    Prints the outcome of the game and the winner (if there is one).
+def new_basic_game():
+    """This function contains the method to run the basic game whereby
+    moves are inputted alternately and the board is displayed after each
+    move. Uses global variables game and opponent_type to take into account
+    the user's choices.
     """
 
     # This loops through the game until a player has won
@@ -102,18 +122,16 @@ def basic_game(game):
         # Checks if input is valid
         if game.player1.in_value == "q":
             return print("Game Ended.")
-        elif game.check_legal_move(game.player1.in_value):
+        elif game.player1.check_legal_move():
             game.player1.change_direction()
         else:
             return game.player2.display_winner()
 
         # Calculate player 1's next position
-        game.player1.next_position = game.calculate_next_position(
-            position=game.player1.head(), new_direction=game.player1.direction
-        )
+        game.player1.calculate_next_position()
 
         # Check if new position is legal
-        if game.check_legal_position(game.player1.next_position):
+        if game.player1.check_legal_position(game):
             game.player1.take_step()
         else:
             return game.player2.display_winner()
@@ -121,24 +139,29 @@ def basic_game(game):
         # Display board
         game.print_board()
 
-        # Call get_input for player input to get player's move
-        game.player2.get_input()
+        if opponent_type == "Human":
+            # Call get_input for player input to get player's move
+            game.player2.get_input()
 
-        # Checks if input is valid
-        if game.player2.in_value == "q":
-            return print("Game Ended.")
-        elif game.check_legal_move(game.player2.in_value):
-            game.player2.change_direction()
+            # Checks if input is valid
+            if game.player2.in_value == "q":
+                return print("Game Ended.")
+            elif game.player2.check_legal_move():
+                game.player2.change_direction()
+            else:
+                return game.player1.display_winner()
+
         else:
-            return game.player1.display_winner()
+            if opponent_type == "RComp":
+                game.player2.gen_exe_computer_move(game, move_type="random")
+            elif opponent_type == "SComp":
+                game.player2.gen_exe_computer_move(game, move_type="smart")
 
         # Calculate player 2's next position
-        game.player2.next_position = game.calculate_next_position(
-            position=game.player2.head(), new_direction=game.player2.direction
-        )
+        game.player2.calculate_next_position()
 
         # Check if new position is legal
-        if game.check_legal_position(game.player2.next_position):
+        if game.player2.check_legal_position(game):
             game.player2.take_step()
         else:
             return game.player1.display_winner()
@@ -147,29 +170,35 @@ def basic_game(game):
         game.print_board()
 
 
-def simultaneous_game(game):
-    """This function contains the method to run the simultaneous game whereby players
-    input their move simultaneously and the board is displayed after both moves have
-    been executed. Response to Step 3A.
-
-    ---Parameters---
-    game: Board instance
-    instance of the Board class.
-
-    ---Returns---
-    print statement
-    Prints the outcome of the game and the winner (if there is one).
+def new_simultaneous_game():
+    """This function contains the method to run the simultaneous game whereby moves
+    are inputed simultaneously and the board is displayed after both moves have
+    been executed. Uses global variables game and opponent_type to take into account
+    the user's choices.
     """
 
     # This loops through the game until a player has won
     while True:
         # Get input for both players using the get_input method
         game.player1.get_input()
-        game.player2.get_input()
 
-        # Check if either inputs are to quit
-        if game.player1.in_value == "q" or game.player2.in_value == "q":
+        # Check if input is to quit
+        if game.player1.in_value == "q":
             return print("Game Ended.")
+
+        # Get input if opponent is human
+        if opponent_type == "Human":
+            game.player2.get_input()
+
+            # Check if input is to quit
+            if game.player2.in_value == "q":
+                return print("Game Ended.")
+
+        else:
+            if opponent_type == "RComp":
+                game.player2.gen_exe_computer_move(game, move_type="random")
+            elif opponent_type == "SComp":
+                game.player2.gen_exe_computer_move(game, move_type="smart")
 
         # Check inputted moves are legal simultaneously
         lm_outcome = game.check_legal_moves_sim()
@@ -183,122 +212,16 @@ def simultaneous_game(game):
             return game.player2.display_winner()
         else:
             game.player1.change_direction()
-            game.player2.change_direction()
+
+            # By definition, the computer's move will always be legal
+            if opponent_type == "Human":
+                game.player2.change_direction()
 
         # Calculate next positions for both players
         game.calculate_next_positions_sim()
 
         # Check inputted positions are legal simultaneously
-        lp_outcome = game.check_legal_positions_sim()
-
-        # Make decisions based on lp_outcome return variable
-        if lp_outcome == "T0":  # Tie
-            return print("Shake hands: It's a tie")
-        elif lp_outcome == "W1":  # Player 1 wins
-            return game.player1.display_winner()
-        elif lp_outcome == "W2":  # Player 2 wins
-            return game.player2.display_winner()
-        else:
-            game.player1.take_step()
-            game.player2.take_step()
-
-        # Display Board
-        game.print_board()
-
-
-def computer_game(game):
-    """This function contains the method to run the computer game whereby a player
-    plays against a computer that generates moves randomly. Moves are executed
-    simultaneously. Response to Step 3B.
-
-    ---Parameters---
-    game: Board instance
-    instance of the Board class.
-
-    ---Returns---
-    print statement
-    Prints the outcome of the game and the winner (if there is one).
-    """
-
-    # This loops through the game until a player has won
-    while True:
-
-        # Get player 1 input
-        game.player1.get_input()
-
-        # Generate random computer move and execute
-        game.player2.generate_random_move()
-        game.player2.change_direction()
-
-        # Check for quit
-        if game.player1.in_value == "q":
-            return print("Game Ended.")
-
-        # Checks if input is valid
-        if game.check_legal_move(game.player1.in_value):
-            game.player1.change_direction()
-        else:
-            return game.player2.display_winner()
-
-        # Calculate both player's next positions
-        game.calculate_next_positions_sim()
-
-        # Check inputted positions are legal simultaneously
-        lp_outcome = game.check_legal_positions_sim()
-
-        # Make decisions based on lp_outcome return variable
-        if lp_outcome == "T0":  # Tie
-            return print("Shake hands: It's a tie")
-        elif lp_outcome == "W1":  # Player 1 wins
-            return game.player1.display_winner()
-        elif lp_outcome == "W2":  # Player 2 wins
-            return game.player2.display_winner()
-        else:
-            game.player1.take_step()
-            game.player2.take_step()
-
-        # Display Board
-        game.print_board()
-
-
-def smart_computer_game(game):
-    """This function contains the method to run the smart computer game whereby a player
-    plays against a smart computer that generates moves based on a search algorithm that
-    searches using a 3x3 grid. Moves are executed simultaneously. Response to Step 3C.
-
-    ---Parameters---
-    game: Board instance
-    instance of the Board class.
-
-    ---Returns---
-    print statement
-    Prints the outcome of the game and the winner (if there is one).
-    """
-
-    # This loops through the game until a player has won
-    while True:
-        # Get player 1 input
-        game.player1.get_input()
-
-        # Check for quit
-        if game.player1.in_value == "q":
-            return print("Game Ended.")
-
-        # Generate Computer's smart move and execute
-        game.player2.in_value = game.player2.generate_smart_move(game)
-        game.player2.change_direction()
-
-        # Checks if input is valid
-        if game.check_legal_move(game.player1.in_value):
-            game.player1.change_direction()
-        else:
-            return game.player2.display_winner()
-
-        # Calculate both player's next positions
-        game.calculate_next_positions_sim()
-
-        # Check inputted positions are legal simultaneously
-        lp_outcome = game.check_legal_positions_sim()
+        lp_outcome = game.check_legal_positions_sim(game)
 
         # Make decisions based on lp_outcome return variable
         if lp_outcome == "T0":  # Tie
