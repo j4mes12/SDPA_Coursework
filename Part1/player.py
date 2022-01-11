@@ -68,10 +68,6 @@ class Player:
     def check_legal_move(self):
         """This method checks if the inputted move is one of L, R, U or D.
 
-        ---Parameters---
-        move: str
-        player move
-
         ---Returns---
         lrud & single_character: bool
         boolean to describe if the move is one of l, r, u or d' and just one character"""
@@ -85,7 +81,9 @@ class Player:
         return lrud & single_character
 
     def check_legal_position(self, game, temp_position=None):
-        """This method checks if the position is within the board and not a player's past move.
+        """This method checks if the position is within the board and not a player's
+        past move. There is an option to use a temporary position instead of the
+        instances's next_position.
 
         ---Parameters---
         position: set

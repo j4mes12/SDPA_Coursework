@@ -7,62 +7,32 @@ This project is a game where one or two players interact with a board and contro
 snakes with the L, R, U, D keys. The intention is to avoid colliding with both the snake
 and the walls of the board.
 
-Technically, this game uses three classes together to create the game and interact with the
-user(s) which are in turn called upon and used to create instances in the main.py script.
+Technically, this game uses two classes together to create the game and interact with the user(s) which are in turn called upon and used to create instances in the main.py script.
 
-The two classes are the Board class (in board.py) and the Player and Computer classes (in player.py)
-with the Computer class inheriting from the Player class.
+The two classes are the Board class (in board.py) and the Player and Computer classes (in player.py) with the Computer class inheriting from the Player class.
 
-A small note on the structure of the classes: the Board class is used to control anything related
-to the board and the Player/Computer classes are used to control everything related to the
-player/computer. Player instances are created *inside* the Board class's '_\_init__' method and
-so are only accessed through the Board instances.
+There is also an additional class, bcolours, that is used to house information on the background colours and is not intrinsically used to control the game.
 
-Each game type is split up into its own function for ease of code review. The game, housed in a
-while loop to play, uses methods as much as possible and successfully does this.
+A small note on the structure of the classes: the Board class is used to control anything related to the board and the Player/Computer classes are used to control everything related to the player/computer. Player instances are created *inside* the Board class's '_\_init__' method and so are only accessed through the Board instances.
 
-As an extension, I have decided to add default values and random selections. It gives the user the
-option to hit Enter with no input and get a random choice in the case of game type and board size.
-In the case of player configurations, such as start position, id and colour, a blank input will
-set these parameters to their pre-assigned default values. These default values are chosen as
-specified in the handbook: player 1 has id = 1, player 2 has id = 2; starting locations are the
-top left and bottom right corners, and both colours default to white.
+Each game type is split up into its own function for ease of code review. The game, housed in a while loop to play, uses methods as much as possible and successfully does this.
+
+As an extension, I have decided to add default values and random selections. It gives the user the option to hit Enter with no input and get a random choice in the case of game type and board size. In the case of player configurations, such as start position, id and colour, a blank input will set these parameters to their pre-assigned default values. These default values are chosen as specified in the handbook: player 1 has id = 1, player 2 has id = 2; starting locations are the top left and bottom right corners respectively, and both colours default to white.
 
 ## Design Decisions
 
-The game starts with a menu so the user can choose which type of game they wish to play. I
-considered splitting the menu up and starting by asking the user if they wanted to player the basic
-game or complex game to start with and then moving on to asking if they want to play a two-player
-or one-player version (in place of a computer game option) etc.
+The game starts with a menu so the user can choose which type of game they wish to play and who they would like to play against. I considered splitting the menu up into separate questions such as asking about the game type, asking if the user wants to play against a human or what type of computer the user would like to play against.
 
-I felt that the menu approach was preferable since it required the user to input less information
-before playing the game. Instead, the player has to choose between four options, set the board size,
-configure personalisations and then play the game. This allowed me to add personalisation features
-(such as initial location, player id and player colour) without bombarding the user with questions
-before they play the game.
+I felt that the menu approach was preferable since it required the user to input less information before playing the game. Instead, the player has to choose between two game type options, choose the opponent (human or computer), set the board size, configure personalisations and then play the game. This may seem like a long list in itself but is preferable to the alternative. This allowed me to add personalisation features (such as initial location, player id and player colour) without bombarding the user with questions before they play the game.
 
-When the option to play against a computer was added, we countinued with simultaneous submission of
-moves thus if a play and computer move into the same space, it will always end in a tie. This decision
-was actively taken based on the wording of the game specification.
+Also, a key  design decision was regarding the computer's generated moves. There were many ways to generate random moves to start with, I initially used a dictionary and random integer generator to generate a random number between 0 and 3 and translate that number into a move. The approach I settled on however it a lot cleaner and is more readable. Regarding the computer's smart moves, the search approach I have taken creates an effective smart computer - it will give the user a run for their money!
 
-Also, a key  design decision was regarding the computer's generated moves. There were many ways to generate
-random moves to start with, I initially used a dictionary and random integer generator to generate a random
-number between 0 and 3 and translate that number into a move. The approach I settled on however it a lot cleaner
-and is more readable. Regarding the computer's smart moves, the search approach I have taken creates an
-effective smart computer - it will give the user a run for their money!
-
-As previously mentioned, an extension I added to the project was adding personal configurations to be made
-such as player id, start position and player colour for both players. I added new methods to achieve this and
-felt that splitting these questions up was important for clarity as I considered lumping them together in one
-line, but that approach was not as user friendly.
+As previously mentioned, an extension I added to the project was adding personal configurations to be made such as player id, start position and player colour for both players. I added new methods to achieve this and felt that splitting these questions up was important for clarity as I considered combining the questions in one line, but that approach was not as user friendly.
 
 I also considered allowing the user to input the starting direction but concluded that no
 initial direction was required as it had no impact on the game.
 
-Further, it was hard to portray to the user how to input their intended location in a meaningful way due to
-the coordinate-nature of the board. I settled on adding new functionality to display a blank board with
-labelled columns and rows which I felt really helped in the user's understanding of inputting their start
-location.
+Further, it was hard to portray to the user how to input their intended location in a meaningful way due to the coordinate nature of the board. I settled on adding new functionality to display a blank board with labelled columns and rows which I felt really helped in the user's understanding of inputting their start location.
 
 ## Files
 
@@ -100,7 +70,7 @@ This method gets the second user/computer's information (id, initial body and co
 
 #### display_colours
 
-This method displays the available colours for the user to decide before the game. We loop through the display dictionary printing the key and value pairs as a menu.
+This method displays the available colours for the user to decide on before the game. We loop through the display dictionary printing the key and value pairs as a menu.
 
 #### make_board
 
@@ -121,18 +91,6 @@ This method displays the board aesthetically with pre-defined output symbols.
 #### get_used_spaces
 
 This method returns all the spaces that have already been taken on the board.
-
-#### calculate_next_position
-
-This method calculates the next position based on the entered direction and current position.
-
-#### check_legal_move
-
-This method checks if the inputted move is one of L, R, U or D.
-
-#### check_legal_position
-
-This method checks if the position is within the board and not a player's past move.
 
 #### calculate_next_positions_sim
 
@@ -162,6 +120,18 @@ This init method initialises the body, id and colour that has been specified in 
 
 This method returns the current location of the player - the head of the snake so-to-speak.
 
+#### calculate_next_position
+
+This method calculates the next position based on instance direction and position.
+
+#### check_legal_move
+
+This method checks if the inputted move is one of L, R, U or D.
+
+#### check_legal_position
+
+This method checks if the position is within the board and not a player's past move. There is an option to use a temporary position instead of the instances' next_position.
+
 #### take_step
 
 This method adds a new position to body for the player instance.
@@ -189,6 +159,10 @@ The __init__ method for the Computer class calls the Player __init__ method to m
 #### display_winner (Computer)
 
 This method displays the winning message when the game is over. Since, in this case, the computer has won, we want to output a different string.
+
+#### calculate_temp_next_position
+
+This method calculates the next position based on a temporary direction and instance position. The distinction between this method and Player's calculate_next_position method is that this uses a direction from a parameter and returns the next_temp_position as opposed to getting both from the instance.
 
 #### gen_exe_computer_move
 
