@@ -70,7 +70,7 @@ Note: if your computer's python default is python2, use the `python3` command in
 
 ### Part 2: Algorithm Analysis (Sorting Algorithm)
 
-This part is all contained in the Part 2 folder, part2.ipynb notebook.
+This part is all contained in the Part 2 folder, part2.ipynb notebook. The part2.ipynb notebook contains the sorting algorithm function, a sample data input with the function being called, and comments on the complexity of the algorithm with reference to each step in the algorithm.
 
 No additional python packages are required other than those that are part of the base package set.
 
