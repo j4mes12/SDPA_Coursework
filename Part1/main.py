@@ -1,23 +1,25 @@
 """
 Name: James Stephenson
 Section: Part 1
-Description: This script starts the Tron Game, makes the game run and interact with the
-user. Different functions are used depending on the user's initial menu choice.
+Description: This script starts the Tron Game, makes the game run
+and interact with the user. Different functions are used depending
+on the user's initial menu choice.
 
 """
 
 # Import Packages
 import random
 from board import Board
-from itertools import product
 
 
 def main():
     """This is the main function that is run and controls the program. It contains
     the menu procedure, board size request and executes the game."""
 
-    ######## CHOOSE GAME TYPE ########
-    # This while loop requests the user's game-type choice and breaks once there is an acceptable entry
+    """ CHOOSE GAME TYPE
+    This while loop requests the user's game-type choice and breaks once there
+    is an acceptable entry"""
+
     while True:
         game_type = input(
             """Welcome to the game. Please select which version you want to play:
@@ -42,8 +44,10 @@ def main():
     gt_dict = {"1": "basic", "2": "sim"}
     game_type = gt_dict[game_type]
 
-    ######## CHOOSE OPPONENT TYPE ########
-    # This while loop requests the user's opponent choice and breaks once there is an acceptable entry
+    """ CHOOSE OPPONENT TYPE
+    This while loop requests the user's opponent choice and breaks once there
+    is an acceptable entry. opponent_type variable made global to be use in
+    game functions."""
     global opponent_type
     while True:
         opponent_type = input(
@@ -70,10 +74,15 @@ def main():
     opponent_dict = {"1": "Human", "2": "RComp", "3": "SComp"}
     opponent_type = opponent_dict[opponent_type]
 
-    ######## GET BOARD SIZE ########
-    # This while loop asks the user to enter a suitable board size
+    """ CHOOSE BOARD SIZE
+    This while loop asks the user to enter a suitable board size"""
     while True:
-        board_size = input("Please enter board size (3 or higher, Blank for Random!): ")
+
+        board_size = input(
+            """Please enter board size
+        (3 or higher, Blank for Random!): """
+        )
+
         if board_size == "q":  # Provides an option to quit the game
             return print("Game Quitted.")
         elif board_size == "":  # Enact the random option
@@ -84,7 +93,8 @@ def main():
             board_size = int(board_size)
             if board_size < 3:  # Checks the input is sufficiently big
                 print(
-                    f"Invalid Board Size. Value must be strictly greater than 3. Input: {board_size}"
+                    f"""Invalid Board Size. Value must be strictly
+                    greater than 3. Input: {board_size}"""
                 )
             else:
                 break
@@ -178,10 +188,10 @@ def basic_game():
 
 
 def simultaneous_game():
-    """This function contains the method to run the simultaneous game whereby moves
-    are inputed simultaneously and the board is displayed after both moves have
-    been executed. Uses global variables game and opponent_type to take into account
-    the user's choices.
+    """This function contains the method to run the simultaneous game
+    whereby moves are inputed simultaneously and the board is displayed
+    after both moves have been executed. Uses global variables game and
+    opponent_type to take into account the user's choices.
     """
 
     # This loops through the game until a player has won

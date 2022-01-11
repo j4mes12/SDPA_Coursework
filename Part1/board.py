@@ -1,8 +1,9 @@
 """
 Name: James Stephenson
 Section: Part 1
-Description: This script houses the Board class which controls the Tron game for Part1.
-It creates and houses the player instances and contains methods to control the board.
+Description: This script houses the Board class which controls
+the Tron game for Part1. It creates and houses the player
+instances and contains methods to control the board.
 """
 
 # Import classes from player
@@ -14,9 +15,6 @@ class Board:
     for each player and contains methods regarding the board, calculating next
     positions and checking the legality of moves/positions.
     """
-
-    # Define dictionaries related to directions to translate between vectors and letters.
-    opposite_direction = {"l": "r", "r": "l", "u": "d", "d": "u"}
 
     def __init__(self, n, computer=False):
         """This method initialises the class and creates the players for the game.
@@ -50,21 +48,27 @@ class Board:
             colour=self.get_user_colour(),
         )
 
-        # If the game version is versus a computer, player2 is a Computer instance
+        # If versus a computer, player2 is a Computer instance
         if computer:
             print("---Computer---")
 
-            # Get user personalisations and check they haven't already been chosen
-            comp_id, comp_body, comp_colour = self.get_second_user_information("c")
-            self.player2 = Computer(id=comp_id, init_body=comp_body, colour=comp_colour)
+            # Get user personalisations and check for repeats
+            comp_id, comp_body, comp_colour = self.get_second_user_information(
+                "c"
+            )
+            self.player2 = Computer(
+                id=comp_id, init_body=comp_body, colour=comp_colour
+            )
         else:
             print("---Player 2---")
 
-            # Get user personalisations and check they haven't already been chosen
+            # Get user personalisations and check for repeats
             p2_id, p2_body, p2_colour = self.get_second_user_information("p2")
-            self.player2 = Player(id=p2_id, init_body=p2_body, colour=p2_colour)
+            self.player2 = Player(
+                id=p2_id, init_body=p2_body, colour=p2_colour
+            )
 
-        # Define dicitonary to translate between output and board storing symbols.
+        # Define dicitonary to translate to board display
         self.output_dict = {
             0: " ",
             1: bcolours.colour_text(self.player1.id, self.player1.colour),
@@ -87,11 +91,12 @@ class Board:
         a single character that is the user's chosen ID
         """
 
-        # Loop to ask the user for their input and check it's of the correct type
+        # Loop to ask the user for their input and error check
         while True:
             # Get user input
             id_input = input(
-                f"Please Enter ID Character (Any number or letter - Blank for default): "
+                """Please Enter ID Character
+                (Any number or letter - Blank for default): """
             )
 
             # Perform error checks
@@ -109,8 +114,8 @@ class Board:
         return out
 
     def get_user_colour(self):
-        """This method gets the user's desired output colour and makes sure it's one of the
-        menu options or the default value is requested.
+        """This method gets the user's desired output colour and makes
+        sure it's one of the menu options or the default value is requested.
 
         ---Returns---
         out: str
@@ -123,7 +128,8 @@ class Board:
 
             # Get user's colour selection
             colour_input = input(
-                f"Please Enter Player Colour (Any number or letter - Blank for default): "
+                """Please Enter Player Colour
+                (Any number or letter - Blank for default): """
             )
 
             # Make sure input is one of the colour options
@@ -142,9 +148,11 @@ class Board:
         return out
 
     def get_user_body(self, player):
-        """This method gets the user's desired initial position. It also makes sure the input type
-        is in the correct format and that they are digits. This is so we can effectively read in the user's input. We also
-        start by displaying the available locations in a grid.
+        """This method gets the user's desired initial position.
+        It also makes sure the input type is in the correct format
+        and that they are digits. This is so we can effectively
+        read in the user's input. We also start by displaying the
+        available locations in a grid.
 
         ---Parameters---
         player: str
@@ -163,7 +171,8 @@ class Board:
 
             # Get user input
             body_input = input(
-                f"Please Enter Start Location (format x,y with digits between 0 and {self.n - 1}): "
+                f"""Please Enter Start Location
+                (format x,y with digits between 0 and {self.n - 1}): """
             )
 
             # Check for defaults
@@ -175,8 +184,7 @@ class Board:
             # Check we have two coordinates
             if len(body_split) == 2:
 
-                # Split input into x and y.
-                # Swapping due to difference in what the user would expect and matrix orders
+                # Split input into x and y
                 body_x = body_split[1]
                 body_y = body_split[0]
 
@@ -190,11 +198,13 @@ class Board:
                         break
                     else:
                         print(
-                            f"Invalid Start Location. Digits must be between 0 and {self.n - 1}"
+                            f"""Invalid Start Location.
+                            Digits must be between 0 and {self.n - 1}"""
                         )
             else:
                 print(
-                    "Invalid Start Location Format. Please enter two digits in the form x,y."
+                    """Invalid Start Location Format.
+                    Please enter two digits in the form x,y."""
                 )
 
         if body_input == "":
@@ -234,7 +244,7 @@ class Board:
             else:
                 break
 
-        # While loop to get the user's initial position and check it's not already been taken
+        # While loop to get the user's initial position and check for repeats
         while True:
             alternate_body = self.get_user_body(player)
             if self.player1.body == alternate_body:
@@ -243,7 +253,7 @@ class Board:
             else:
                 break
 
-        # While loop to get the user's colour and check it's not already been taken
+        # While loop to get the user's colour and check for repeats
         while True:
             alternate_colour = self.get_user_colour()
             if alternate_colour != bcolours.WHITE:
@@ -277,7 +287,8 @@ class Board:
         return board
 
     def display_location_board(self):
-        """This method displays a board so the user can decide where they want to start."""
+        """This method displays a board so the user can decide
+        where they want to start."""
 
         # Prints the column numbers with correct spacing
         print("   ", end="")
@@ -292,14 +303,15 @@ class Board:
             else:
                 print(f"{i}|", end="")
 
-            # Print the empty grid row - double spacing needed for columns of two digits
+            # Print the empty grid row. Double spacing needed for two digits
             if self.n > 9:
                 print(" |" * 10 + "  |" * (self.n - 10))
             else:
                 print(" |" * self.n)
 
     def populate_board(self, board):
-        """This method populates the board with the current body and head for each player.
+        """This method populates the board with the current body
+        and head for each player.
 
         ---Parameters---
         board: list
@@ -320,7 +332,8 @@ class Board:
         board[p2_head[0]][p2_head[1]] = 2
 
     def print_board(self):
-        """This method displays the board aesthetically with pre-defined output symbols."""
+        """This method displays the board aesthetically with pre-defined
+        output symbols."""
 
         # Makes Board
         board = self.make_board()
@@ -331,7 +344,7 @@ class Board:
         # Print initial border
         print("#" * (2 * self.n + 3))
 
-        # Loops through the board and prints each point with symbols to break the board up
+        # Loops through the board and prints each position
         for i in range(self.n):
             print("#|", end="")
             for j in range(self.n):
@@ -342,11 +355,13 @@ class Board:
         print("#" * (2 * self.n + 3))
 
     def get_used_spaces(self):
-        """This method returns all the spaces that have already been taken on the board.
+        """This method returns all the spaces that have already been
+        taken on the board.
 
         ---Returns---
         used_spcaes: list
-        list of tuples that contain the spaces that have been taken by previous moves.
+        list of tuples that contain the spaces that have been taken
+        by previous moves.
         """
 
         used_spaces = self.player1.body + self.player2.body
@@ -354,8 +369,9 @@ class Board:
         return used_spaces
 
     def calculate_next_positions_sim(self):
-        """This method calculates the next position based on instance directions and head.
-        The next position is assigned to the next_position instance variable."""
+        """This method calculates the next position based on instance
+        directions and head. The next position is assigned to the
+        next_position instance variable."""
 
         # Calculate next position for player 1
         self.player1.calculate_next_position()
@@ -364,12 +380,13 @@ class Board:
         self.player2.calculate_next_position()
 
     def check_legal_moves_sim(self):
-        """This method checks if the inputted move is one of lrud for both player instances.
+        """This method checks if the inputted move is one of lrud for
+        both player instances.
 
         ---Returns---
         result: str
-        string identifier that details the outcome of the legailty test. P0 = pass,
-        T0 = tie, W1 = player 1 wins, W2 = player 2 wins"""
+        string identifier that details the outcome of the legailty test.
+        P0 = pass, T0 = tie, W1 = player 1 wins, W2 = player 2 wins"""
 
         result = "P0"
 
@@ -380,23 +397,28 @@ class Board:
             result = "T0"
 
         # Checks if player 2 is illegal and player 1 is legal - results in W1
-        elif (self.player1.check_legal_move()) & (not self.player2.check_legal_move()):
+        elif (self.player1.check_legal_move()) & (
+            not self.player2.check_legal_move()
+        ):
             result = "W1"
 
         # Checks if player 1 is illegal and player 2 is legal - results in W2
-        elif (not self.player1.check_legal_move()) & (self.player2.check_legal_move()):
+        elif (not self.player1.check_legal_move()) & (
+            self.player2.check_legal_move()
+        ):
             result = "W2"
 
         return result
 
     def check_legal_positions_sim(self, game):
-        """This method checks if the positions are within the board and not a player's past
-        move for both players simultaneously. Heavily uses the check_legal_position method.
+        """This method checks if the positions are within the board and not
+        a player's past move for both players simultaneously. Heavily uses
+        the check_legal_position method.
 
         ---Returns---
         result: str
-        string identifier that details the outcome of the legailty test. P0 = pass,
-        T0 = tie, W1 = player 1 wins, W2 = player 2 wins"""
+        string identifier that details the outcome of the legailty test.
+        P0 = pass, T0 = tie, W1 = player 1 wins, W2 = player 2 wins"""
 
         # Initialse result to default on a pass
         result = "P0"
@@ -423,8 +445,9 @@ class Board:
 
 
 class bcolours:
-    """This class stores the colour information strings, a dictionary to print
-    the colours aesthetically and a dictionary to store the available colours."""
+    """This class stores the colour information strings, a dictionary
+    to print the colours aesthetically and a dictionary to store the
+    available colours."""
 
     # End string
     global END
