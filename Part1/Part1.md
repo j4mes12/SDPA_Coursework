@@ -44,6 +44,8 @@ There are three files in this project: main.py, board.py and player.py
 
 ## Classes
 
+---
+
 ### Board Class
 
 This Class is responsible for controlling the game. It creates the instances for each player and contains methods regarding the board, calculating next positions and checking the legality of moves/positions.
@@ -104,9 +106,17 @@ This method checks if the inputted move is one of lrud for both player instances
 
 This method checks if the positions are within the board and not a player's past move for both players simultaneously. Heavily uses the check_legal_position method.
 
+---
+
 ### bcolours Class
 
 This class stores the colour information strings, a dictionary to print the colours aesthetically and a dictionary to store the available colours. There a no methods in this class, it's just used to store colour information.
+
+#### colour_text
+
+This function applies the specified colour to the specified string and returns the coloured string. Note, this is a function not a method since it is not associated with an object.
+
+---
 
 ### Player Class
 
